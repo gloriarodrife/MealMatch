@@ -1,0 +1,53 @@
+.root {
+    /* Palette Variables */
+    -fx-bg-cream: #fdfaf5;
+    -fx-deep-charcoal: #333333;
+    -fx-terracotta: #c04848;
+    -fx-soft-sand: #f0ebe3;
+    -fx-border-light: #eeeeee;
+    -fx-gray-text: #888888;
+}
+
+/* Base Styles */
+.main-container {
+    -fx-background-color: -fx-bg-cream;
+}
+
+.nav-link {
+    -fx-text-fill: -fx-deep-charcoal;
+    -fx-underline: false;
+    -fx-font-size: 14;
+}
+
+.nav-link-active {
+    -fx-text-fill: -fx-terracotta;
+    -fx-font-weight: bold;
+}
+
+.search-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-border-width: 1;
+    -fx-padding: 8 12 8 12;
+    -fx-font-size: 14px;
+    -fx-text-fill: #666666;
+    -fx-prompt-text-fill: #999999;
+}
+
+.search-field:focused {
+    -fx-background-color: #ffffff;
+    -fx-border-color: -fx-terracotta;
+    -fx-border-width: 1.5;
+}
+
+.sidebar-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-gray-text;
+    -fx-font-size: 12;
+}
+
+.button {
+    -fx-cursor: hand;
+}
