@@ -3,9 +3,12 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1"
-            stylesheets="@/com/mealmatch/mealmatch/view/style.css"
-            fx:controller="com.mealmatch.mealmatch.controller.HelloController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="720.0"
+            prefWidth="1080.0"
+            stylesheets="@style.css"
+            xmlns="http://javafx.com/javafx/25"
+            fx:controller="com.mealmatch.mealmatch.controller.HelloController"
+            styleClass="main-container">
 
     <top>
         <HBox alignment="CENTER_LEFT" spacing="30"
