@@ -1,4 +1,4 @@
-package com.mealmatch.mealmatch;
+package com.mealmatch.mealmatch.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
