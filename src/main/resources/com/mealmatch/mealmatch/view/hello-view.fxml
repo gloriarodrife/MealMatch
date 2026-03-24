@@ -55,6 +55,10 @@
             <CheckBox text="Vegetarian"/>
             <CheckBox text="Vegan"/>
             <CheckBox text="Gluten Free"/>
+
+            <Label styleClass="sidebar-label" text="DIFFICULTY"/>
+            <CheckBox text="Easy"/>
+            <CheckBox text="Intermediate"/>
         </VBox>
     </left>
 
