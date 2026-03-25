@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.SVGPath?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" prefWidth="280.0" styleClass="recipe-card" stylesheets="@style.css"
+      xmlns="http://javafx.com/javafx/17">
+    <AnchorPane prefHeight="190.0" styleClass="image-container">
+        <ImageView fx:id="recipeImage" fitHeight="190.0" fitWidth="280.0" pickOnBounds="true"
+                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+    </AnchorPane>
+
+    <VBox spacing="12.0">
+        <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+        </padding>
+        <VBox spacing="6.0">
+            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                <Label fx:id="categoryLabel" styleClass="category-tag" text="MAIN COURSES"/>
+                <Label fx:id="dietaryLabel" styleClass="dietary-tag" text="VEGAN"/>
+            </HBox>
+
+            <Label fx:id="titleLabel" styleClass="recipe-title" text="Market Spring Salad" wrapText="true"/>
+        </VBox>
+
+        <HBox alignment="BOTTOM_LEFT">
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                <Label fx:id="timeLabel" styleClass="detail-text" text="15 MINUTES"/>
+                <Label text="•"/>
+                <Label fx:id="difficultyLabel" styleClass="detail-text" text="EASY"/>
+            </HBox>
+
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <StackPane fx:id="favoriteButton" styleClass="favorite-container">
+                <Pane prefHeight="32.0" prefWidth="32.0" styleClass="favorite-background"/>
+                <SVGPath
+                        content="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                        styleClass="favorite-icon" scaleX="0.6" scaleY="0.6"/>
+            </StackPane>
+        </HBox>
+    </VBox>
+</VBox>

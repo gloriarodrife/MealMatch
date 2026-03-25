@@ -51,3 +51,82 @@
 .button {
     -fx-cursor: hand;
 }
+
+
+/* Cards styles */
+.recipe-card {
+    -fx-background-color: white;
+    -fx-background-radius: 18;
+    -fx-border-radius: 18;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.06), 15, 0, 0, 8);
+    -fx-cursor: hand;
+    -fx-overflow: hidden;
+}
+
+.recipe-card:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.12), 20, 0, 0, 12);
+    -fx-translate-y: -4;
+}
+
+.image-container {
+    -fx-background-radius: 18 18 0 0;
+    -fx-border-radius: 18 18 0 0;
+    -fx-overflow: hidden;
+}
+
+.recipe-image {
+    -fx-background-radius: 18 18 0 0;
+}
+
+.category-tag, .dietary-tag {
+    -fx-background-color: #F8EFEA;
+    -fx-text-fill: #964B00;
+    -fx-padding: 4 10;
+    -fx-background-radius: 15;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-text-transform: uppercase;
+}
+
+.recipe-title {
+    -fx-font-family: "Playfair Display", serif;
+    -fx-font-weight: bold;
+    -fx-text-fill: #222222;
+}
+
+.detail-text {
+    -fx-text-fill: #888888;
+    -fx-font-size: 12px;
+    -fx-text-transform: uppercase;
+}
+
+.favorite-container {
+    -fx-cursor: hand;
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.favorite-background {
+    -fx-background-color: rgba(255, 255, 255, 0.4);
+    -fx-background-radius: 20;
+    -fx-border-color: rgba(0, 0, 0, 0.05);
+    -fx-border-radius: 20;
+    -fx-border-width: 0.5;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.05), 5, 0, 0, 2);
+}
+
+.favorite-container:hover .favorite-background {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 8, 0, 0, 4);
+}
+
+
+.favorite-icon {
+    -fx-fill: #E5A9A9;
+    -fx-stroke: #E5A9A9;
+    -fx-stroke-width: 0.5;
+}
+
+.favorite-container:hover .favorite-icon {
+    -fx-fill: #D37575;
+}
+

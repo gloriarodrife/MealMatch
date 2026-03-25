@@ -1,7 +1,18 @@
 package com.mealmatch.mealmatch.controller;
 
+import com.mealmatch.mealmatch.model.Recipe;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 
 public class HelloController {
     /**
@@ -23,5 +34,72 @@ public class HelloController {
         recipeGrid.getChildren().clear();
 
         System.out.println("The recipe grid for the recipes");
+        List<Recipe> recipes = getMockRecipes();
+
+        for (Recipe recipe : recipes) {
+
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mealmatch/mealmatch/view/recipe-card.fxml"));
+                VBox card = loader.load();
+
+                Label title = (Label) card.lookup("#titleLabel");
+                Label time = (Label) card.lookup("#timeLabel");
+                Label difficulty = (Label) card.lookup("#difficultyLabel");
+                Label category = (Label) card.lookup("#categoryLabel");
+
+                if (title != null) title.setText(recipe.getTitle());
+                if (category != null) category.setText(recipe.getCategory());
+                if (time != null) time.setText(recipe.getTime());
+                if (difficulty != null) difficulty.setText(recipe.getDifficulty());
+
+
+                ImageView iv = (ImageView) card.lookup("#recipeImage"); // <--- El ID del FXML
+
+
+                if (iv != null && recipe.getImagePath() != null) {
+                    try {
+                        String path = "/com/mealmatch/mealmatch/view/images/" + recipe.getImagePath();
+                        Image img = new Image(Objects.requireNonNull(getClass().getResourceAsStream(path)));
+                        iv.setImage(img);
+                    } catch (Exception e) {
+                        System.err.println("Could not load image: " + recipe.getImagePath());
+
+                    }
+                }
+
+                recipeGrid.getChildren().add(card);
+
+            } catch (Exception e) {
+                System.err.println("Error loading recipe card: " + e.getMessage());
+            }
+        }
+    }
+
+    private List<Recipe> getMockRecipes() {
+        List<Recipe> recipes = new ArrayList<>();
+
+
+        recipes.add(new Recipe("Fluffy Berry Pancakes", "15 min", "Breakfast", "Easy", "pancakes.jpg"));
+        recipes.add(new Recipe("Chocolate Chip Waffles", "20 min", "Breakfast", "Easy", "pancakes.jpg"));
+        recipes.add(new Recipe("French Toast Deluxe", "10 min", "Breakfast", "Easy", "pancakes.jpg"));
+
+        recipes.add(new Recipe("Classic Margherita Pizza", "25 min", "Main Courses", "Easy", "pizza.jpg"));
+        recipes.add(new Recipe("Pepperoni Feast", "30 min", "Main Courses", "Easy", "pizza.jpg"));
+        recipes.add(new Recipe("Homemade BBQ Pizza", "40 min", "Main Courses", "Intermediate", "pizza.jpg"));
+
+        recipes.add(new Recipe("Roasted Pumpkin Soup", "45 min", "Soups", "Intermediate", "soup.jpg"));
+        recipes.add(new Recipe("Creamy Tomato Basil", "30 min", "Soups", "Easy", "soup.jpg"));
+        recipes.add(new Recipe("Spicy Lentil Stew", "50 min", "Soups", "Intermediate", "soup.jpg"));
+
+        recipes.add(new Recipe("Street Veggie Tacos", "30 min", "Main Courses", "Intermediate", "tacos.jpg"));
+        recipes.add(new Recipe("Spicy Beef Tacos", "35 min", "Main Courses", "Intermediate", "tacos.jpg"));
+        recipes.add(new Recipe("Grilled Chicken Tacos", "25 min", "Main Courses", "Easy", "tacos.jpg"));
+
+        recipes.add(new Recipe("Garden Veggie Pizza", "35 min", "Main Courses", "Easy", "pizza.jpg"));
+        recipes.add(new Recipe("Autumn Mushroom Soup", "55 min", "Soups", "Intermediate", "soup.jpg"));
+        recipes.add(new Recipe("Blueberry Morning Crepes", "20 min", "Breakfast", "Intermediate", "pancakes.jpg"));
+
+
+        return recipes;
     }
 }
