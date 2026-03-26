@@ -39,11 +39,12 @@
                 <Insets bottom="20" left="20" right="20" top="20"/>
             </padding>
             <Label styleClass="sidebar-label" text="CATEGORIES"/>
-            <Hyperlink styleClass="nav-link" text="All Recipes"/>
-            <Hyperlink styleClass="nav-link" text="Breakfast"/>
-            <Hyperlink styleClass="nav-link" text="Main Courses"/>
-            <Hyperlink styleClass="nav-link" text="Soups"/>
-            <Hyperlink styleClass="nav-link" text="Desserts"/>
+            <Hyperlink fx:id="linkAll" onAction="#handleCategoryAction" styleClass="nav-link" text="All Recipes"/>
+            <Hyperlink fx:id="linkBreakfast" onAction="#handleCategoryAction" styleClass="nav-link" text="Breakfast"/>
+            <Hyperlink fx:id="linkMain" onAction="#handleCategoryAction" styleClass="nav-link" text="Main Courses"/>
+            <Hyperlink fx:id="linkSoups" onAction="#handleCategoryAction" styleClass="nav-link" text="Soups"/>
+            <Hyperlink fx:id="linkDesserts" onAction="#handleCategoryAction" styleClass="nav-link" text="Desserts"/>
+
 
             <Separator>
                 <VBox.margin>
