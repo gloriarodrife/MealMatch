@@ -3,6 +3,7 @@ package com.mealmatch.mealmatch.controller;
 import com.mealmatch.mealmatch.model.Recipe;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -26,18 +27,35 @@ public class HelloController {
      */
     @FXML
     public void initialize() {
-        System.out.println("Loading Main Layout...");
+        renderRecipes(getMockRecipes());
+    }
 
-        // Later, we will call the JSON loader here and use a loop
-        // to create and add recipe cards to the 'recipeGrid'.
+    @FXML
+    private void handleCategoryAction(javafx.event.ActionEvent event) {
+        try {
+            Hyperlink clickedLink = (Hyperlink) event.getSource();
+            String category = clickedLink.getText();
 
+            List<Recipe> allRecipes = getMockRecipes();
+
+            if (category.equals("All Recipes")) {
+                renderRecipes(allRecipes);
+            } else {
+                List<Recipe> filtered = allRecipes.stream()
+                        .filter(r -> r.getCategory().equalsIgnoreCase(category))
+                        .toList();
+                renderRecipes(filtered);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void renderRecipes(List<Recipe> recipes) {
         recipeGrid.getChildren().clear();
 
-        System.out.println("The recipe grid for the recipes");
-        List<Recipe> recipes = getMockRecipes();
-
         for (Recipe recipe : recipes) {
-
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mealmatch/mealmatch/view/recipe-card.fxml"));
                 VBox card = loader.load();
@@ -52,10 +70,7 @@ public class HelloController {
                 if (time != null) time.setText(recipe.getTime());
                 if (difficulty != null) difficulty.setText(recipe.getDifficulty());
 
-
-                ImageView iv = (ImageView) card.lookup("#recipeImage"); // <--- El ID del FXML
-
-
+                ImageView iv = (ImageView) card.lookup("#recipeImage");
                 if (iv != null && recipe.getImagePath() != null) {
                     try {
                         String path = "/com/mealmatch/mealmatch/view/images/" + recipe.getImagePath();
@@ -63,7 +78,6 @@ public class HelloController {
                         iv.setImage(img);
                     } catch (Exception e) {
                         System.err.println("Could not load image: " + recipe.getImagePath());
-
                     }
                 }
 
@@ -77,7 +91,6 @@ public class HelloController {
 
     private List<Recipe> getMockRecipes() {
         List<Recipe> recipes = new ArrayList<>();
-
 
         recipes.add(new Recipe("Fluffy Berry Pancakes", "15 min", "Breakfast", "Easy", "pancakes.jpg"));
         recipes.add(new Recipe("Chocolate Chip Waffles", "20 min", "Breakfast", "Easy", "pancakes.jpg"));
