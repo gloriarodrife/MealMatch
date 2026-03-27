@@ -12,6 +12,9 @@ public class Recipe {
     private String category;
     private String difficulty;
     private String imagePath;
+    private boolean vegetarian;
+    private boolean vegan;
+    private boolean glutenFree;
 
     /**
      * Constructs a Recipe with a unique ID and detailed information.
@@ -21,14 +24,20 @@ public class Recipe {
      * @param category   The food category (e.g., "Breakfast", "Main Courses").
      * @param difficulty The skill level required (e.g., "Easy", "Intermediate").
      * @param imagePath  The relative path or filename for the recipe image.
+     * @param vegetarian Whether the recipe is vegetarian.
+     * @param vegan      Whether the recipe is vegan.
+     * @param glutenFree Whether the recipe is gluten-free.
      */
-    public Recipe(String title, String time, String category, String difficulty, String imagePath) {
+    public Recipe(String title, String time, String category, String difficulty, String imagePath, boolean vegetarian, boolean vegan, boolean glutenFree) {
         this.id = ++counter;
         this.title = title;
         this.time = time;
         this.category = category;
         this.difficulty = difficulty;
         this.imagePath = imagePath;
+        this.vegetarian = vegetarian;
+        this.vegan = vegan;
+        this.glutenFree = glutenFree;
     }
 
     /**
@@ -128,5 +137,29 @@ public class Recipe {
      */
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public boolean isVegetarian() {
+        return vegetarian;
+    }
+
+    public void setVegetarian(boolean vegetarian) {
+        this.vegetarian = vegetarian;
+    }
+
+    public boolean isVegan() {
+        return vegan;
+    }
+
+    public void setVegan(boolean vegan) {
+        this.vegan = vegan;
+    }
+
+    public boolean isGlutenFree() {
+        return glutenFree;
+    }
+
+    public void setGlutenFree(boolean glutenFree) {
+        this.glutenFree = glutenFree;
     }
 }
