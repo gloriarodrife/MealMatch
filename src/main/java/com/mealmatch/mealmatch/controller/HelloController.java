@@ -17,12 +17,8 @@ import java.util.Objects;
 
 
 public class HelloController {
-    public Hyperlink linkAll;
-    public Hyperlink linkBreakfast;
-    public Hyperlink linkMain;
-    public Hyperlink linkSoups;
-    public Hyperlink linkDesserts;
-    public TextField searchRecipe;
+    @FXML
+    private TextField searchRecipe;
 
     /**
      * This is the container where the recipe cards will be rendered.
@@ -39,7 +35,6 @@ public class HelloController {
         searchRecipe.textProperty().addListener((observable, oldValue, newValue) -> handleSearchByTitle(newValue));
     }
 
-    @FXML
     private void handleSearchByTitle(String search) {
         List<Recipe> allRecipes = getMockRecipes();
 
