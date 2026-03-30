@@ -1,77 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="720.0"
-            prefWidth="1080.0"
-            stylesheets="@style.css"
-            xmlns="http://javafx.com/javafx/25"
-            fx:controller="com.mealmatch.mealmatch.controller.HelloController"
-            styleClass="main-container">
 
+<BorderPane prefHeight="720.0" prefWidth="1080.0" styleClass="main-container" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mealmatch.mealmatch.controller.HelloController">
     <top>
-        <HBox alignment="CENTER_LEFT" spacing="30"
-              style="-fx-border-color: -fx-border-light; -fx-border-width: 0 0 1 0;">
-            <padding>
-                <Insets bottom="15" left="30" right="30" top="15"/>
-            </padding>
-
-            <Label style="-fx-font-size: 22; -fx-font-weight: bold; -fx-text-fill: -fx-deep-charcoal;"
-                   text="Meal Match"/>
-
-            <HBox alignment="CENTER_LEFT" spacing="20">
-                <Hyperlink text="Recipes" styleClass="nav-link, nav-link-active"/>
-                <Hyperlink text="Ingredients" styleClass="nav-link"/>
-            </HBox>
-
+        <HBox alignment="CENTER_LEFT" spacing="30" style="-fx-border-color: #ddd; -fx-border-width: 0 0 1 0; -fx-background-color: white;">
+            <padding><Insets bottom="15" left="30" right="30" top="15"/></padding>
+            <Label style="-fx-font-size: 22; -fx-font-weight: bold;" text="Meal Match"/>
             <Region HBox.hgrow="ALWAYS"/>
-
-            <HBox alignment="CENTER_RIGHT" spacing="15">
-                <TextField prefWidth="220" promptText="Search recipes..." styleClass="search-field"
-                           fx:id="searchRecipe"/>
-            </HBox>
+            <TextField fx:id="searchRecipe" prefWidth="250" promptText="Search recipes..." styleClass="search-field" />
         </HBox>
     </top>
-
     <left>
-        <VBox prefWidth="200" spacing="15">
-            <padding>
-                <Insets bottom="20" left="20" right="20" top="20"/>
-            </padding>
-            <Label styleClass="sidebar-label" text="CATEGORIES"/>
-            <Hyperlink fx:id="linkAll" onAction="#handleCategoryAction" styleClass="nav-link" text="All Recipes"/>
-            <Hyperlink fx:id="linkBreakfast" onAction="#handleCategoryAction" styleClass="nav-link" text="Breakfast"/>
-            <Hyperlink fx:id="linkMain" onAction="#handleCategoryAction" styleClass="nav-link" text="Main Courses"/>
-            <Hyperlink fx:id="linkSoups" onAction="#handleCategoryAction" styleClass="nav-link" text="Soups"/>
-            <Hyperlink fx:id="linkDesserts" onAction="#handleCategoryAction" styleClass="nav-link" text="Desserts"/>
-
-
-            <Separator>
-                <VBox.margin>
-                    <Insets bottom="10" top="10"/>
-                </VBox.margin>
-            </Separator>
-
-            <Label styleClass="sidebar-label" text="DIETARY"/>
-            <CheckBox text="Vegetarian"/>
-            <CheckBox text="Vegan"/>
-            <CheckBox text="Gluten Free"/>
-
-            <Label styleClass="sidebar-label" text="DIFFICULTY"/>
-            <CheckBox text="Easy"/>
-            <CheckBox text="Intermediate"/>
+        <VBox prefWidth="200" spacing="15" style="-fx-background-color: #f8f9fa;">
+            <padding><Insets bottom="20" left="20" right="20" top="20"/></padding>
+            <Label style="-fx-font-weight: bold;" text="CATEGORIES"/>
+            <Hyperlink onAction="#handleCategoryAction" text="All Recipes"/>
+            <Hyperlink onAction="#handleCategoryAction" text="Breakfast"/>
+            <Hyperlink onAction="#handleCategoryAction" text="Main Courses"/>
+            <Hyperlink onAction="#handleCategoryAction" text="Soups"/>
+            <Separator/>
+            <Label style="-fx-font-weight: bold;" text="DIETARY"/>
+            <CheckBox fx:id="checkVegetarian" onAction="#handleFilterChange" text="Vegetarian"/>
+            <CheckBox fx:id="checkVegan" onAction="#handleFilterChange" text="Vegan"/>
+            <CheckBox fx:id="checkGlutenFree" onAction="#handleFilterChange" text="Gluten Free"/>
         </VBox>
     </left>
-
     <center>
-        <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background-color: white; -fx-background-insets: 0;">
-            <FlowPane fx:id="recipeGrid" hgap="25" style="-fx-background-color: white;" vgap="25">
-                <padding>
-                    <Insets bottom="30" left="30" right="30" top="30"/>
-                </padding>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: white;">
+            <FlowPane fx:id="recipeGrid" hgap="25" vgap="25">
+                <padding><Insets bottom="30" left="30" right="30" top="30"/></padding>
             </FlowPane>
         </ScrollPane>
     </center>
-
 </BorderPane>
