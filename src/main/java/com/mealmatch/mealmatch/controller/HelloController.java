@@ -37,6 +37,8 @@ public class HelloController {
         currentCategory = clickedLink.getText();
         applyAllFilters();
     }
+    
+    // function to be able to apply the filters to each recipe
 
     private void applyAllFilters() {
         String search = searchRecipe.getText().toLowerCase();
