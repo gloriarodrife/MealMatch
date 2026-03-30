@@ -28,7 +28,8 @@
             <Region HBox.hgrow="ALWAYS"/>
 
             <HBox alignment="CENTER_RIGHT" spacing="15">
-                <TextField prefWidth="220" promptText="Search recipes..." styleClass="search-field"/>
+                <TextField prefWidth="220" promptText="Search recipes..." styleClass="search-field"
+                           fx:id="searchRecipe"/>
             </HBox>
         </HBox>
     </top>
