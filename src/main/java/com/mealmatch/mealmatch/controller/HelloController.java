@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
@@ -18,6 +19,9 @@ import java.util.Objects;
 
 
 public class HelloController {
+    @FXML
+    private TextField searchRecipe;
+
     /**
      * This is the container where the recipe cards will be rendered.
      */
@@ -31,6 +35,20 @@ public class HelloController {
     @FXML
     public void initialize() {
         renderRecipes(getMockRecipes());
+        searchRecipe.textProperty().addListener((observable, oldValue, newValue) -> handleSearchByTitle(newValue));
+    }
+
+    private void handleSearchByTitle(String search) {
+        List<Recipe> allRecipes = getMockRecipes();
+
+        if (search == null || search.isEmpty()) {
+            renderRecipes(allRecipes);
+        } else {
+            String queryLowerCase = search.toLowerCase();
+            List<Recipe> filtered = allRecipes.stream().filter(recipe -> recipe.getTitle().toLowerCase().contains(queryLowerCase)).toList();
+            renderRecipes(filtered);
+        }
+
     }
 
     @FXML

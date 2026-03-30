@@ -28,7 +28,9 @@
             <Region HBox.hgrow="ALWAYS"/>
 
             <HBox alignment="CENTER_RIGHT" spacing="15">
-                <TextField fx:id="searchField" prefWidth="220" promptText="Search recipes..." styleClass="search-field"/>            </HBox>
+                <TextField prefWidth="220" promptText="Search recipes..." styleClass="search-field"
+                           fx:id="searchRecipe"/>
+            </HBox>
         </HBox>
     </top>
 
@@ -51,9 +53,10 @@
                 </VBox.margin>
             </Separator>
 
-            <CheckBox fx:id="checkVegetarian" onAction="#handleFilterChange" text="Vegetarian"/>
-            <CheckBox fx:id="checkVegan" onAction="#handleFilterChange" text="Vegan"/>
-            <CheckBox fx:id="checkGlutenFree" onAction="#handleFilterChange" text="Gluten Free"/>
+            <Label styleClass="sidebar-label" text="DIETARY"/>
+            <CheckBox text="Vegetarian"/>
+            <CheckBox text="Vegan"/>
+            <CheckBox text="Gluten Free"/>
 
             <Label styleClass="sidebar-label" text="DIFFICULTY"/>
             <CheckBox text="Easy"/>
