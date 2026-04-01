@@ -1,8 +1,10 @@
 package com.mealmatch.mealmatch.controller;
 
 import com.mealmatch.mealmatch.model.Recipe;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -21,6 +23,12 @@ import java.util.Objects;
 public class HelloController {
     @FXML
     private TextField searchRecipe;
+    @FXML
+    private CheckBox checkVegetarian;
+    @FXML
+    private CheckBox checkVegan;
+    @FXML
+    private CheckBox checkGlutenFree;
 
     /**
      * This is the container where the recipe cards will be rendered.
@@ -72,6 +80,33 @@ public class HelloController {
         }
     }
 
+    @FXML
+    public void handleDietaryFilter(ActionEvent actionEvent) {
+        List<Recipe> allRecipes = getMockRecipes();
+
+        List<String> activeFilters = new ArrayList<>();
+
+        if (checkVegetarian.isSelected()) activeFilters.add("Vegetarian");
+        if (checkVegan.isSelected()) activeFilters.add("Vegan");
+        if (checkGlutenFree.isSelected()) activeFilters.add("Gluten Free");
+
+        if (activeFilters.isEmpty()) {
+            renderRecipes(allRecipes);
+            return;
+        }
+
+        List<Recipe> filtered = allRecipes.stream()
+                .filter(recipe -> {
+                    List<String> recipeTags = recipe.getDietaryTags();
+                    return activeFilters.stream().allMatch(filter ->
+                            recipeTags.stream().anyMatch(tag -> tag.equalsIgnoreCase(filter))
+                    );
+                })
+                .toList();
+
+        renderRecipes(filtered);
+    }
+
     private void renderRecipes(List<Recipe> recipes) {
         recipeGrid.getChildren().clear();
 
@@ -98,7 +133,7 @@ public class HelloController {
                     for (String tag : recipe.getDietaryTags()) {
                         String displayTag = tag;
                         String styleClass = "dietary-tag";
-                        
+
                         if (tag.equalsIgnoreCase("Gluten Free")) {
                             displayTag = "GF";
                             styleClass = "tag-gf";
@@ -164,4 +199,6 @@ public class HelloController {
 
         return recipes;
     }
+
+
 }
