@@ -52,7 +52,6 @@
     -fx-cursor: hand;
 }
 
-
 /* Cards styles */
 .recipe-card {
     -fx-background-color: white;
@@ -60,7 +59,6 @@
     -fx-border-radius: 18;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.06), 15, 0, 0, 8);
     -fx-cursor: hand;
-    -fx-overflow: hidden;
 }
 
 .recipe-card:hover {
@@ -72,6 +70,7 @@
     -fx-background-radius: 18 18 0 0;
     -fx-border-radius: 18 18 0 0;
     -fx-overflow: hidden;
+    -fx-background-color: transparent;
 }
 
 .recipe-image {
@@ -92,7 +91,34 @@
     -fx-font-family: "Playfair Display", serif;
     -fx-font-weight: bold;
     -fx-text-fill: #222222;
+    -fx-font-size: 18px;
 }
+
+.dietary-tag {
+    -fx-background-color: transparent;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 2 6 2 6;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+.tag-veggie {
+    -fx-text-fill: #27AE60;
+    -fx-border-color: #27AE60;
+}
+
+.tag-vegan {
+    -fx-text-fill: #16A085;
+    -fx-border-color: #16A085;
+}
+
+.tag-gf {
+    -fx-text-fill: #E67E22;
+    -fx-border-color: #E67E22;
+}
+
 
 .detail-text {
     -fx-text-fill: #888888;
@@ -129,4 +155,3 @@
 .favorite-container:hover .favorite-icon {
     -fx-fill: #D37575;
 }
-
