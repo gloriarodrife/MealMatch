@@ -6,16 +6,25 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="720.0" prefWidth="1080.0" styleClass="main-container"
             xmlns="http://javafx.com/javafx/21" fx:controller="com.mealmatch.mealmatch.controller.HelloController">
     <top>
-        <HBox alignment="CENTER_LEFT" spacing="30"
+        <HBox alignment="CENTER_LEFT" prefHeight="80.0" spacing="30.0"
               style="-fx-border-color: #ddd; -fx-border-width: 0 0 1 0; -fx-background-color: white;">
             <padding>
-                <Insets bottom="15" left="30" right="30" top="15"/>
+                <Insets bottom="20" left="40" right="180" top="20"/>
             </padding>
             <Label style="-fx-font-size: 22; -fx-font-weight: bold;" text="Meal Match"/>
+
             <Region HBox.hgrow="ALWAYS"/>
             <TextField fx:id="searchRecipe" prefWidth="250" promptText="Search recipes..." styleClass="search-field"/>
+
+            <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-cursor: hand;">
+                <Label text="User Name"/>
+                <StackPane>
+                    <Label text="AN" style="-fx-text-fill: #c04848; -fx-font-weight: bold;"/>
+                </StackPane>
+            </HBox>
         </HBox>
     </top>
+
     <left>
         <VBox prefWidth="200" spacing="15" style="-fx-background-color: #f8f9fa;">
             <padding>
@@ -27,7 +36,7 @@
             <Hyperlink onAction="#handleCategoryAction" text="Main Courses"/>
             <Hyperlink onAction="#handleCategoryAction" text="Soups"/>
             <Separator/>
-            
+
             <Label style="-fx-font-weight: bold;" text="DIETARY"/>
             <CheckBox fx:id="checkVegetarian" text="Vegetarian" onAction="#handleDietaryFilter"/>
             <CheckBox fx:id="checkVegan" text="Vegan" onAction="#handleDietaryFilter"/>

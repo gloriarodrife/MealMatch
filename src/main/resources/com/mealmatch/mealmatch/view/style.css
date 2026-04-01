@@ -52,7 +52,6 @@
     -fx-cursor: hand;
 }
 
-
 /* Cards styles */
 .recipe-card {
     -fx-background-color: white;
@@ -71,6 +70,7 @@
     -fx-background-radius: 18 18 0 0;
     -fx-border-radius: 18 18 0 0;
     -fx-overflow: hidden;
+    -fx-background-color: transparent;
 }
 
 .recipe-image {
@@ -155,4 +155,3 @@
 .favorite-container:hover .favorite-icon {
     -fx-fill: #D37575;
 }
-
