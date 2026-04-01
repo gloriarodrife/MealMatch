@@ -27,10 +27,15 @@
             <Hyperlink onAction="#handleCategoryAction" text="Main Courses"/>
             <Hyperlink onAction="#handleCategoryAction" text="Soups"/>
             <Separator/>
+            
             <Label style="-fx-font-weight: bold;" text="DIETARY"/>
             <CheckBox fx:id="checkVegetarian" text="Vegetarian" onAction="#handleDietaryFilter"/>
             <CheckBox fx:id="checkVegan" text="Vegan" onAction="#handleDietaryFilter"/>
             <CheckBox fx:id="checkGlutenFree" text="Gluten Free" onAction="#handleDietaryFilter"/>
+
+            <Label styleClass="sidebar-label" text="DIFFICULTY"/>
+            <CheckBox text="Easy"/>
+            <CheckBox text="Intermediate"/>
         </VBox>
     </left>
     <center>
