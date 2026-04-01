@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.SVGPath?>
@@ -18,12 +18,10 @@
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
         </padding>
         <VBox spacing="6.0">
-            <HBox alignment="CENTER_LEFT" spacing="8.0">
-                <Label fx:id="categoryLabel" styleClass="category-tag" text="MAIN COURSES"/>
-                <Label fx:id="dietaryLabel" styleClass="dietary-tag" text="VEGAN"/>
-            </HBox>
-
             <Label fx:id="titleLabel" styleClass="recipe-title" text="Market Spring Salad" wrapText="true"/>
+
+            <HBox alignment="CENTER_LEFT" spacing="8.0" fx:id="dietaryContainer" minHeight="25.0">
+            </HBox>
         </VBox>
 
         <HBox alignment="BOTTOM_LEFT">
