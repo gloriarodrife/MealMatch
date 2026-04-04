@@ -42,9 +42,10 @@
             <CheckBox fx:id="checkVegan" text="Vegan" onAction="#handleDietaryFilter"/>
             <CheckBox fx:id="checkGlutenFree" text="Gluten Free" onAction="#handleDietaryFilter"/>
 
-            <Label styleClass="sidebar-label" text="DIFFICULTY"/>
-            <CheckBox text="Easy"/>
-            <CheckBox text="Intermediate"/>
+            <Label style="-fx-font-weight: bold;" text="DIFFICULTY"/>
+            <CheckBox fx:id="checkEasy" text="Easy" onAction="#handleFilters"/>
+            <CheckBox fx:id="checkIntermediate" text="Intermediate" onAction="#handleFilters"/>
+
         </VBox>
     </left>
     <center>
