@@ -30,6 +30,9 @@ public class HelloController {
     @FXML
     private CheckBox checkGlutenFree;
 
+    // Category filters
+    @FXML private CheckBox checkEasy;
+    @FXML private CheckBox checkIntermediate;
     /**
      * This is the container where the recipe cards will be rendered.
      */
@@ -78,6 +81,26 @@ public class HelloController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    public void handleFilters() {
+        List<Recipe> allRecipes = getMockRecipes();
+        List<String> activeDifficulties = new ArrayList<>();
+
+        if (checkEasy.isSelected()) activeDifficulties.add("Easy");
+        if (checkIntermediate.isSelected()) activeDifficulties.add("Intermediate");
+
+        if (activeDifficulties.isEmpty()) {
+            renderRecipes(allRecipes);
+            return;
+        }
+
+        List<Recipe> filtered = allRecipes.stream()
+                .filter(recipe -> activeDifficulties.contains(recipe.getDifficulty()))
+                .toList();
+
+        renderRecipes(filtered);
     }
 
     @FXML
