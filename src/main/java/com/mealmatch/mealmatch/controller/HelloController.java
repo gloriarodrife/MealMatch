@@ -80,7 +80,7 @@ public class HelloController {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error handling category filter " + e.getMessage());
         }
     }
 
@@ -190,10 +190,7 @@ public class HelloController {
                     }
                 }
 
-                card.setOnMouseClicked(event -> {
-
-                    showRecipeDetail(recipe, event);
-                });
+                card.setOnMouseClicked(event -> showRecipeDetail(recipe, event));
                 recipeGrid.getChildren().add(card);
 
             } catch (Exception e) {
@@ -215,7 +212,7 @@ public class HelloController {
             javafx.stage.Stage stage = (javafx.stage.Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             stage.getScene().setRoot(detailRoot);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error loading recipe: " + e.getMessage());
         }
     }
 

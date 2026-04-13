@@ -120,7 +120,7 @@ public class RecipeDetailController {
             stage.getScene().setRoot(root);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error trying to go back: " + e.getMessage());
         }
     }
 }

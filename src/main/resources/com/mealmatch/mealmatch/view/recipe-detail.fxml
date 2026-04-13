@@ -12,48 +12,46 @@
     <ScrollPane fitToWidth="true" style="-fx-background: #fcfaf5; -fx-background-color: transparent;"
                 AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
                 AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-        <content>
-            <VBox spacing="40" style="-fx-padding: 60 50 100 50;">
+        <VBox spacing="40" style="-fx-padding: 60 50 100 50;">
 
-                <HBox alignment="CENTER_LEFT">
-                    <Label fx:id="titleLabel" styleClass="detail-title" wrapText="true"/>
-                    <Region HBox.hgrow="ALWAYS"/>
+            <HBox alignment="CENTER_LEFT">
+                <Label fx:id="titleLabel" styleClass="detail-title" wrapText="true"/>
+                <Region HBox.hgrow="ALWAYS"/>
 
-                    <StackPane fx:id="favoriteButton" styleClass="favorite-container">
-                        <Pane prefHeight="40.0" prefWidth="40.0" styleClass="favorite-background"/>
-                        <SVGPath
-                                content="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-                                styleClass="favorite-icon" scaleX="0.7" scaleY="0.7"/>
-                    </StackPane>
-                </HBox>
+                <StackPane fx:id="favoriteButton" styleClass="favorite-container">
+                    <Pane prefHeight="40.0" prefWidth="40.0" styleClass="favorite-background"/>
+                    <SVGPath
+                            content="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                            styleClass="favorite-icon" scaleX="0.7" scaleY="0.7"/>
+                </StackPane>
+            </HBox>
 
-                <HBox spacing="20" alignment="CENTER_LEFT">
-                    <Label fx:id="timeLabel" styleClass="meta-label"/>
-                    <Label fx:id="difficultyLabel" styleClass="meta-label"/>
-                    <FlowPane fx:id="tagsContainer" hgap="10" vgap="5"/>
-                </HBox>
+            <HBox spacing="20" alignment="CENTER_LEFT">
+                <Label fx:id="timeLabel" styleClass="meta-label"/>
+                <Label fx:id="difficultyLabel" styleClass="meta-label"/>
+                <FlowPane fx:id="tagsContainer" hgap="10" vgap="5"/>
+            </HBox>
 
-                <Separator style="-fx-opacity: 0.3;"/>
+            <Separator style="-fx-opacity: 0.3;"/>
 
-                <HBox spacing="40">
+            <HBox spacing="40">
 
-                    <VBox minWidth="300" maxWidth="350">
-                        <ImageView fx:id="recipeImage" fitWidth="300" preserveRatio="true"/>
-                    </VBox>
+                <VBox minWidth="300" maxWidth="350">
+                    <ImageView fx:id="recipeImage" fitWidth="300" preserveRatio="true"/>
+                </VBox>
 
-                    <VBox spacing="15" minWidth="200">
-                        <Label text="THE INGREDIENTS" styleClass="section-header"/>
-                        <VBox fx:id="ingredientsContainer" spacing="10"/>
-                    </VBox>
+                <VBox spacing="15" minWidth="200">
+                    <Label text="THE INGREDIENTS" styleClass="section-header"/>
+                    <VBox fx:id="ingredientsContainer" spacing="10"/>
+                </VBox>
 
-                    <VBox spacing="15" HBox.hgrow="ALWAYS">
-                        <Label text="THE METHOD" styleClass="section-header"/>
-                        <VBox fx:id="stepsContainer" spacing="25"/>
-                    </VBox>
+                <VBox spacing="15" HBox.hgrow="ALWAYS">
+                    <Label text="THE METHOD" styleClass="section-header"/>
+                    <VBox fx:id="stepsContainer" spacing="25"/>
+                </VBox>
 
-                </HBox>
-            </VBox>
-        </content>
+            </HBox>
+        </VBox>
     </ScrollPane>
 
     <Button text="← BACK" onAction="#handleBack" styleClass="back-button"
