@@ -31,8 +31,10 @@ public class HelloController {
     private CheckBox checkGlutenFree;
 
     // Category filters
-    @FXML private CheckBox checkEasy;
-    @FXML private CheckBox checkIntermediate;
+    @FXML
+    private CheckBox checkEasy;
+    @FXML
+    private CheckBox checkIntermediate;
     /**
      * This is the container where the recipe cards will be rendered.
      */
@@ -189,11 +191,32 @@ public class HelloController {
                     }
                 }
 
+                card.setOnMouseClicked(event -> {
+
+                    showRecipeDetail(recipe, event);
+                });
                 recipeGrid.getChildren().add(card);
 
             } catch (Exception e) {
                 System.err.println("Error loading recipe card: " + e.getMessage());
             }
+        }
+    }
+
+    private void showRecipeDetail(Recipe recipe, javafx.scene.input.MouseEvent event) {
+
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mealmatch/mealmatch/view/recipe-detail.fxml"));
+            javafx.scene.Parent detailRoot = loader.load();
+
+            RecipeDetailController controller = loader.getController();
+            controller.initData(recipe);
+
+            javafx.stage.Stage stage = (javafx.stage.Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.getScene().setRoot(detailRoot);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
