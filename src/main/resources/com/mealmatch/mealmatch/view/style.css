@@ -155,3 +155,60 @@
 .favorite-container:hover .favorite-icon {
     -fx-fill: #D37575;
 }
+
+
+/* Detail page styles */
+.main-container {
+    -fx-background-color: #fcfaf5;
+}
+
+.detail-title {
+    -fx-font-family: "Georgia", "Serif";
+    -fx-font-size: 42px;
+    -fx-text-fill: #1a1a1a;
+}
+
+.section-header {
+    -fx-text-fill: #b55d4b;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.meta-label {
+    -fx-text-fill: #666666;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.back-button {
+    -fx-background-color: transparent;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 20;
+    -fx-text-fill: #888888;
+    -fx-font-size: 10px;
+    -fx-padding: 5 15;
+}
+
+.back-button:hover {
+    -fx-border-color: #b55d4b;
+    -fx-text-fill: #b55d4b;
+}
+
+
+.step-box {
+    -fx-padding: 0 0 0 20;
+    -fx-border-color: #eeeeee;
+    -fx-border-width: 0 0 0 1;
+}
+
+.step-num {
+    -fx-text-fill: #b55d4b;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.step-text {
+    -fx-font-size: 15px;
+    -fx-text-fill: #333333;
+    -fx-line-spacing: 1.5;
+}
