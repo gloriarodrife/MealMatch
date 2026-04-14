@@ -36,16 +36,14 @@
             <Hyperlink onAction="#handleCategoryAction" text="Main Courses"/>
             <Hyperlink onAction="#handleCategoryAction" text="Soups"/>
             <Separator/>
-
             <Label style="-fx-font-weight: bold;" text="DIETARY"/>
-            <CheckBox fx:id="checkVegetarian" text="Vegetarian" onAction="#handleDietaryFilter"/>
-            <CheckBox fx:id="checkVegan" text="Vegan" onAction="#handleDietaryFilter"/>
-            <CheckBox fx:id="checkGlutenFree" text="Gluten Free" onAction="#handleDietaryFilter"/>
+            <CheckBox fx:id="checkVegetarian" text="Vegetarian" onAction="#applyFilters"/>
+            <CheckBox fx:id="checkVegan" text="Vegan" onAction="#applyFilters"/>
+            <CheckBox fx:id="checkGlutenFree" text="Gluten Free" onAction="#applyFilters"/>
 
             <Label style="-fx-font-weight: bold;" text="DIFFICULTY"/>
-            <CheckBox fx:id="checkEasy" text="Easy" onAction="#handleFilters"/>
-            <CheckBox fx:id="checkIntermediate" text="Intermediate" onAction="#handleFilters"/>
-
+            <CheckBox fx:id="checkEasy" text="Easy" onAction="#applyFilters"/>
+            <CheckBox fx:id="checkIntermediate" text="Intermediate" onAction="#applyFilters"/>
         </VBox>
     </left>
     <center>
