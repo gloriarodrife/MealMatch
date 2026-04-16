@@ -1,6 +1,7 @@
 package com.mealmatch.mealmatch.controller;
 
 import com.mealmatch.mealmatch.model.Recipe;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
@@ -13,6 +14,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,11 @@ public class HelloController {
     private CheckBox checkEasy;
     @FXML
     private CheckBox checkIntermediate;
+
+    private List<Recipe> allRecipes;
+
+    //ALL filters
+    private String selectedCategory = "All Recipes";
     /**
      * This is the container where the recipe cards will be rendered.
      */
@@ -45,94 +52,65 @@ public class HelloController {
      */
     @FXML
     public void initialize() {
-        renderRecipes(getMockRecipes());
-        searchRecipe.textProperty().addListener((observable, oldValue, newValue) -> handleSearchByTitle(newValue));
-    }
+        allRecipes = getMockRecipes();
+        renderRecipes(allRecipes);
 
-    private void handleSearchByTitle(String search) {
-        List<Recipe> allRecipes = getMockRecipes();
-
-        if (search == null || search.isEmpty()) {
-            renderRecipes(allRecipes);
-        } else {
-            String queryLowerCase = search.toLowerCase();
-            List<Recipe> filtered = allRecipes.stream().filter(recipe -> recipe.title().toLowerCase().contains(queryLowerCase)).toList();
-            renderRecipes(filtered);
-        }
+        PauseTransition pause = new PauseTransition(Duration.millis(300));
+        searchRecipe.textProperty().addListener((obs, oldVal, newVal) -> {
+            pause.setOnFinished(event -> applyFilters());
+            pause.playFromStart();
+        });
 
     }
 
     @FXML
     private void handleCategoryAction(javafx.event.ActionEvent event) {
-        try {
-            Hyperlink clickedLink = (Hyperlink) event.getSource();
-            String category = clickedLink.getText();
+        Hyperlink link = (Hyperlink) event.getSource();
+        selectedCategory = link.getText();
+        applyFilters();
+    }
 
-            List<Recipe> allRecipes = getMockRecipes();
 
-            if (category.equals("All Recipes")) {
-                renderRecipes(allRecipes);
-            } else {
-                List<Recipe> filtered = allRecipes.stream()
-                        .filter(r -> r.category().equalsIgnoreCase(category))
-                        .toList();
-                renderRecipes(filtered);
+    //combined filtering process
+    @FXML
+    public void applyFilters() {
+
+        List<Recipe> filtered = new ArrayList<>();
+        String query = searchRecipe.getText().toLowerCase();
+
+        for (Recipe r : allRecipes) {
+            boolean matchesSearch = query.isEmpty() || r.title().toLowerCase().contains(query);
+            boolean matchesCat = selectedCategory.equals("All Recipes") || r.category().equalsIgnoreCase(selectedCategory);
+
+            boolean matchesDiff = true;
+            if (checkEasy.isSelected() || checkIntermediate.isSelected()) {
+                matchesDiff = (checkEasy.isSelected() && r.difficulty().equalsIgnoreCase("Easy")) ||
+                        (checkIntermediate.isSelected() && r.difficulty().equalsIgnoreCase("Intermediate"));
             }
 
-        } catch (Exception e) {
-            System.err.println("Error handling category filter " + e.getMessage());
+            boolean matchesVeg = !checkVegetarian.isSelected() || r.dietaryTags().contains("Vegetarian");
+            boolean matchesVegan = !checkVegan.isSelected() || r.dietaryTags().contains("Vegan");
+            boolean matchesGF = !checkGlutenFree.isSelected() || r.dietaryTags().contains("Gluten Free");
+
+            if (matchesSearch && matchesCat && matchesDiff && matchesVeg && matchesVegan && matchesGF) {
+                filtered.add(r);
+            }
         }
-    }
-
-    @FXML
-    public void handleFilters() {
-        List<Recipe> allRecipes = getMockRecipes();
-        List<String> activeDifficulties = new ArrayList<>();
-
-        if (checkEasy.isSelected()) activeDifficulties.add("Easy");
-        if (checkIntermediate.isSelected()) activeDifficulties.add("Intermediate");
-
-        if (activeDifficulties.isEmpty()) {
-            renderRecipes(allRecipes);
-            return;
-        }
-
-        List<Recipe> filtered = allRecipes.stream()
-                .filter(recipe -> activeDifficulties.contains(recipe.difficulty()))
-                .toList();
-
-        renderRecipes(filtered);
-    }
-
-    @FXML
-    public void handleDietaryFilter() {
-        List<Recipe> allRecipes = getMockRecipes();
-
-        List<String> activeFilters = new ArrayList<>();
-
-        if (checkVegetarian.isSelected()) activeFilters.add("Vegetarian");
-        if (checkVegan.isSelected()) activeFilters.add("Vegan");
-        if (checkGlutenFree.isSelected()) activeFilters.add("Gluten Free");
-
-        if (activeFilters.isEmpty()) {
-            renderRecipes(allRecipes);
-            return;
-        }
-
-        List<Recipe> filtered = allRecipes.stream()
-                .filter(recipe -> {
-                    List<String> recipeTags = recipe.dietaryTags();
-                    return activeFilters.stream().allMatch(filter ->
-                            recipeTags.stream().anyMatch(tag -> tag.equalsIgnoreCase(filter))
-                    );
-                })
-                .toList();
 
         renderRecipes(filtered);
     }
 
     private void renderRecipes(List<Recipe> recipes) {
         recipeGrid.getChildren().clear();
+
+
+        if (recipes.isEmpty()) {
+            Label noResultsLabel = new Label("No recipes match the filters.");
+            noResultsLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: gray; -fx-padding: 20px;");
+            recipeGrid.getChildren().add(noResultsLabel);
+            return;
+        }
+
 
         for (Recipe recipe : recipes) {
             try {
