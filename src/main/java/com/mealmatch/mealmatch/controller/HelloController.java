@@ -1,6 +1,7 @@
 package com.mealmatch.mealmatch.controller;
 
 import com.mealmatch.mealmatch.model.Recipe;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
@@ -13,6 +14,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,7 @@ public class HelloController {
     @FXML
     private CheckBox checkIntermediate;
 
+    private List<Recipe> allRecipes;
 
     //ALL filters
     private String selectedCategory = "All Recipes";
@@ -49,19 +52,14 @@ public class HelloController {
      */
     @FXML
     public void initialize() {
-        renderRecipes(getMockRecipes());
-        searchRecipe.textProperty().addListener((obs, oldVal, newVal) -> applyFilters());    }
+        allRecipes = getMockRecipes();
+        renderRecipes(allRecipes);
 
-    private void handleSearchByTitle(String search) {
-        List<Recipe> allRecipes = getMockRecipes();
-
-        if (search == null || search.isEmpty()) {
-            renderRecipes(allRecipes);
-        } else {
-            String queryLowerCase = search.toLowerCase();
-            List<Recipe> filtered = allRecipes.stream().filter(recipe -> recipe.title().toLowerCase().contains(queryLowerCase)).toList();
-            renderRecipes(filtered);
-        }
+        PauseTransition pause = new PauseTransition(Duration.millis(300));
+        searchRecipe.textProperty().addListener((obs, oldVal, newVal) -> {
+            pause.setOnFinished(event -> applyFilters());
+            pause.playFromStart();
+        });
 
     }
 
@@ -73,37 +71,46 @@ public class HelloController {
     }
 
 
-//combined filtering process
-@FXML
-public void applyFilters() {
-    List<Recipe> allRecipes = getMockRecipes();
-    List<Recipe> filtered = new ArrayList<>();
-    String query = searchRecipe.getText().toLowerCase();
+    //combined filtering process
+    @FXML
+    public void applyFilters() {
 
-    for (Recipe r : allRecipes) {
-        boolean matchesSearch = query.isEmpty() || r.title().toLowerCase().contains(query);
-        boolean matchesCat = selectedCategory.equals("All Recipes") || r.category().equalsIgnoreCase(selectedCategory);
+        List<Recipe> filtered = new ArrayList<>();
+        String query = searchRecipe.getText().toLowerCase();
 
-        boolean matchesDiff = true;
-        if (checkEasy.isSelected() || checkIntermediate.isSelected()) {
-            matchesDiff = (checkEasy.isSelected() && r.difficulty().equalsIgnoreCase("Easy")) ||
-                    (checkIntermediate.isSelected() && r.difficulty().equalsIgnoreCase("Intermediate"));
+        for (Recipe r : allRecipes) {
+            boolean matchesSearch = query.isEmpty() || r.title().toLowerCase().contains(query);
+            boolean matchesCat = selectedCategory.equals("All Recipes") || r.category().equalsIgnoreCase(selectedCategory);
+
+            boolean matchesDiff = true;
+            if (checkEasy.isSelected() || checkIntermediate.isSelected()) {
+                matchesDiff = (checkEasy.isSelected() && r.difficulty().equalsIgnoreCase("Easy")) ||
+                        (checkIntermediate.isSelected() && r.difficulty().equalsIgnoreCase("Intermediate"));
+            }
+
+            boolean matchesVeg = !checkVegetarian.isSelected() || r.dietaryTags().contains("Vegetarian");
+            boolean matchesVegan = !checkVegan.isSelected() || r.dietaryTags().contains("Vegan");
+            boolean matchesGF = !checkGlutenFree.isSelected() || r.dietaryTags().contains("Gluten Free");
+
+            if (matchesSearch && matchesCat && matchesDiff && matchesVeg && matchesVegan && matchesGF) {
+                filtered.add(r);
+            }
         }
 
-        boolean matchesVeg = !checkVegetarian.isSelected() || r.dietaryTags().contains("Vegetarian");
-        boolean matchesVegan = !checkVegan.isSelected() || r.dietaryTags().contains("Vegan");
-        boolean matchesGF = !checkGlutenFree.isSelected() || r.dietaryTags().contains("Gluten Free");
-
-        if (matchesSearch && matchesCat && matchesDiff && matchesVeg && matchesVegan && matchesGF) {
-            filtered.add(r);
-        }
+        renderRecipes(filtered);
     }
-
-    renderRecipes(filtered);
-}
 
     private void renderRecipes(List<Recipe> recipes) {
         recipeGrid.getChildren().clear();
+
+
+        if (recipes.isEmpty()) {
+            Label noResultsLabel = new Label("No recipes match the filters.");
+            noResultsLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: gray; -fx-padding: 20px;");
+            recipeGrid.getChildren().add(noResultsLabel);
+            return;
+        }
+
 
         for (Recipe recipe : recipes) {
             try {
