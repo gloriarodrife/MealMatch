@@ -1,20 +1,16 @@
 package com.mealmatch.mealmatch.controller;
 
 import com.mealmatch.mealmatch.model.Recipe;
+import com.mealmatch.mealmatch.util.NavigationUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.Objects;
 
 public class RecipeDetailController {
@@ -112,15 +108,6 @@ public class RecipeDetailController {
 
     @FXML
     private void handleBack(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mealmatch/mealmatch/view/hello-view.fxml"));
-            Parent root = loader.load();
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.getScene().setRoot(root);
-
-        } catch (IOException e) {
-            System.err.println("Error trying to go back: " + e.getMessage());
-        }
+        NavigationUtils.navigateToHome(event);
     }
 }
