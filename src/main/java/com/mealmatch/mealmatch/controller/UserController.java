@@ -1,23 +1,26 @@
 package com.mealmatch.mealmatch.controller;
 
-import javafx.event.ActionEvent;
+import com.mealmatch.mealmatch.model.Recipe;
+import com.mealmatch.mealmatch.model.User;
+import com.mealmatch.mealmatch.util.NavigationUtils;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserController {
+    public static User loggedUser = null;
     // Fake data
     private final String FAKE_EMAIL = "gloria@wcc.edu";
     private final String FAKE_PASS = "1234";
+    private final String FAKE_NAME = "Gloria Rodriguez";
+
+
     @FXML
     public VBox loadingOverlay;
     @FXML
@@ -50,7 +53,11 @@ public class UserController {
 
     @FXML
     public void initialize() {
-        showLoginView();
+        if (loggedUser != null) {
+            showProfileView();
+        } else {
+            showLoginView();
+        }
     }
 
     private void showError() {
@@ -68,14 +75,10 @@ public class UserController {
         String password = passField.getText();
 
         if (email.equals(FAKE_EMAIL) && password.equals(FAKE_PASS)) {
-            try {
-                javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource("/com/mealmatch/mealmatch/view/hello-view.fxml"));
-                javafx.scene.Parent root = loader.load();
-                javafx.stage.Stage stage = (javafx.stage.Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-                stage.getScene().setRoot(root);
-            } catch (java.io.IOException e) {
-                System.err.println("Error loading main view: " + e.getMessage());
-            }
+
+            loggedUser = new User(FAKE_NAME, FAKE_EMAIL, FAKE_PASS);
+
+            NavigationUtils.navigateToHome(event);
         } else {
             showError();
         }
@@ -84,7 +87,7 @@ public class UserController {
     @FXML
     public void processRegistration() {
         if (!regEmailField.getText().isEmpty()) {
-            showProfileView(regEmailField.getText(), regUsernameField.getText());
+            showProfileView();
         }
     }
 
@@ -110,7 +113,8 @@ public class UserController {
         authSection.setManaged(true);
     }
 
-    private void showProfileView(String email, String name) {
+    @FXML
+    private void showProfileView() {
         authSection.setVisible(false);
         authSection.setManaged(false);
         registerSection.setVisible(false);
@@ -119,19 +123,36 @@ public class UserController {
         profileSection.setVisible(true);
         profileSection.setManaged(true);
 
-        nameLabel.setText("Name: " + name);
-        emailLabel.setText("Email: " + email);
+        nameLabel.setText(loggedUser.getUsername());
+        emailLabel.setText(loggedUser.getEmail());
+
+        loadFavorites();
     }
 
     @FXML
-    public void handleLogout() {
+    private void loadFavorites() {
+        favoritesFlowPane.getChildren().clear();
+        List<Recipe> favorites = getMockFavorites();
+
+        for (Recipe recipe : favorites) {
+            VBox card = NavigationUtils.createRecipeCard(recipe);
+
+            if (card != null) {
+                favoritesFlowPane.getChildren().add(card);
+            }
+        }
+    }
+
+    @FXML
+    public void handleLogout(javafx.event.ActionEvent event) {
         emailField.clear();
         passField.clear();
         regUsernameField.clear();
         regEmailField.clear();
         regPassField.clear();
 
-        showLoginView();
+        loggedUser = null;
+        NavigationUtils.navigateToHome(event);
     }
 
     @FXML
@@ -140,16 +161,25 @@ public class UserController {
     }
 
     @FXML
-    private void handleBack(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mealmatch/mealmatch/view/hello-view.fxml"));
-            Parent root = loader.load();
+    private void handleBack(javafx.event.ActionEvent event) {
+        NavigationUtils.navigateToHome(event);
+    }
 
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.getScene().setRoot(root);
 
-        } catch (IOException e) {
-            System.err.println("Error trying to go back: " + e.getMessage());
-        }
+    // Fake Favorites data
+    private List<Recipe> getMockFavorites() {
+        List<Recipe> favs = new ArrayList<>();
+
+        favs.add(new Recipe(
+                "Authentic Basque Cheesecake", "12 hours", "Desserts", "Advanced", "pancakes.jpg",
+                List.of("Vegetarian", "Gluten Free"), List.of("Cheese", "Sugar"), List.of("Mix", "Bake")
+        ));
+
+        favs.add(new Recipe(
+                "Fluffy Berry Pancakes", "15 min", "Breakfast", "Easy", "pancakes.jpg",
+                List.of("Vegetarian"), List.of("Flour", "Milk"), List.of("Cook", "Serve")
+        ));
+
+        return favs;
     }
 }

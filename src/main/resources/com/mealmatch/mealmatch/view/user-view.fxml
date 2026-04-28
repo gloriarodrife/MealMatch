@@ -40,33 +40,53 @@
                 <Button text="Back to Login" onAction="#showLoginView" styleClass="btn-secondary"/>
             </HBox>
         </VBox>
+        <VBox fx:id="profileSection" spacing="30" visible="false" managed="false">
+            <padding>
+                <Insets top="30" right="30" bottom="30" left="30"/>
+            </padding>
 
-        <VBox fx:id="profileSection" spacing="20" visible="false" managed="false">
-            <HBox spacing="20" alignment="CENTER_LEFT">
+            <HBox spacing="20">
                 <VBox spacing="5">
-                    <Label fx:id="nameLabel" text="Name: Jane Doe" style="-fx-font-size: 18px;"/>
-                    <Label fx:id="emailLabel" text="Email: jane@example.com"/>
+                    <Label fx:id="nameLabel" styleClass="profile-name" text="User Name"/>
+                    <Label fx:id="emailLabel" styleClass="profile-email" text="user@example.com"/>
                 </VBox>
-                <Button text="Log Out" onAction="#handleLogout" styleClass="btn-danger"/>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <VBox spacing="20" alignment="TOP_RIGHT">
+                    <Button text="Log Out" onAction="#handleLogout" prefHeight="35.0"
+                            styleClass="btn-danger-outline"
+                            style="-fx-cursor: hand; -fx-padding: 0 20;"/>
+
+                    <VBox spacing="10"
+                          style="-fx-background-color: #fcfaf5; -fx-padding: 15; -fx-background-radius: 10; -fx-border-color: #eee; -fx-border-radius: 10;">
+                        <Label text="ACCOUNT SECURITY"
+                               style="-fx-font-weight: bold; -fx-font-size: 11px; -fx-text-fill: #999; -fx-letter-spacing: 1px;"/>
+                        <HBox spacing="10" alignment="CENTER_LEFT">
+                            <PasswordField fx:id="newPassField" promptText="New Password"
+                                           prefHeight="35.0"
+                                           style="-fx-background-radius: 8; -fx-border-radius: 8;"/>
+                            <Button text="Update" onAction="#handleUpdatePass"
+                                    prefHeight="35.0"
+                                    styleClass="btn-danger-outline"
+                                    style="-fx-cursor: hand; -fx-padding: 0 20;"/>
+                        </HBox>
+                    </VBox>
+                </VBox>
             </HBox>
 
-            <Separator/>
+            <Separator style="-fx-opacity: 0.4;"/>
 
-            <VBox spacing="10">
-                <Label text="Change Password" style="-fx-font-weight: bold;"/>
-                <HBox spacing="10">
-                    <PasswordField fx:id="newPassField" promptText="New Password"/>
-                    <Button text="Update" onAction="#handleUpdatePass"/>
-                </HBox>
+            <VBox spacing="20" VBox.vgrow="ALWAYS">
+                <Label text="My Favorite Recipes" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+                <ScrollPane fitToWidth="true"
+                            style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;">
+                    <FlowPane fx:id="favoritesFlowPane" hgap="25" vgap="25">
+                    </FlowPane>
+                </ScrollPane>
             </VBox>
-
-            <Label text="My Favorite Recipes" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
-            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
-                <FlowPane fx:id="favoritesFlowPane" hgap="10" vgap="10">
-                </FlowPane>
-            </ScrollPane>
         </VBox>
-
     </VBox>
 
     <Button text="← BACK" onAction="#handleBack" styleClass="back-button"

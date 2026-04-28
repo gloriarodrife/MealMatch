@@ -274,3 +274,55 @@
     -fx-border-color: #c04848;
     -fx-text-fill: #c04848;
 }
+
+
+/*Profile Styles*/
+.profile-name {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-terracotta;
+}
+
+.profile-email {
+    -fx-font-size: 14px;
+    -fx-text-fill: -fx-gray-text;
+}
+
+
+.input-field-small {
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 5;
+    -fx-pref-width: 150;
+}
+
+.btn-secondary-small {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #555;
+    -fx-border-color: #ccc;
+    -fx-cursor: hand;
+}
+
+.btn-danger-outline {
+    -fx-background-color: transparent;
+    -fx-text-fill: #c04848;
+    -fx-border-color: #c04848;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 8;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+}
+
+.btn-danger-outline:hover {
+    -fx-background-color: #c04848;
+    -fx-text-fill: white;
+}
+
+/* ScrollPane invisible */
+.transparent-scroll {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-border-color: transparent;
+}
+
+
