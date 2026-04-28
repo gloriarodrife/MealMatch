@@ -60,11 +60,11 @@ public class UserController {
         }
     }
 
-    private void showError() {
+    private void showError(String title, String errorMessage) {
         javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
-        alert.setTitle("Login Failed");
+        alert.setTitle(title);
         alert.setHeaderText(null);
-        alert.setContentText("Incorrect email or password. Please try again.");
+        alert.setContentText(errorMessage);
         alert.showAndWait();
     }
 
@@ -74,13 +74,16 @@ public class UserController {
         String email = emailField.getText();
         String password = passField.getText();
 
+        if (email.isEmpty() || password.isEmpty()) {
+            showError("Missing Information", "Please enter both email and password.");
+            return;
+        }
+
         if (email.equals(FAKE_EMAIL) && password.equals(FAKE_PASS)) {
-
             loggedUser = new User(FAKE_NAME, FAKE_EMAIL, FAKE_PASS);
-
             NavigationUtils.navigateToHome(event);
         } else {
-            showError();
+            showError("Invalid Credentials", "The email or password provided is incorrect.");
         }
     }
 
