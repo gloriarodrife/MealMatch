@@ -100,6 +100,24 @@ public class HelloController {
         renderRecipes(filtered);
     }
 
+
+    @FXML
+    public void onUserButtonClick(javafx.event.ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mealmatch/mealmatch/view/user-view.fxml"));
+            javafx.scene.Parent userRoot = loader.load();
+
+            // Get the current stage (window) from the button click event
+            javafx.stage.Stage stage = (javafx.stage.Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+            // Replace the current content with the new user page
+            stage.getScene().setRoot(userRoot);
+
+        } catch (Exception e) {
+            System.err.println("Error loading user view: " + e.getMessage());
+        }
+    }
+
     private void renderRecipes(List<Recipe> recipes) {
         recipeGrid.getChildren().clear();
 

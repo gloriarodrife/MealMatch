@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.mealmatch.mealmatch.controller.UserController"
+            styleClass="main-container" stylesheets="@./style.css">
+
+    <VBox alignment="CENTER" spacing="20.0"
+          AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+
+        <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+        </padding>
+
+
+        <VBox fx:id="authSection" spacing="15" alignment="CENTER" maxWidth="400">
+            <Label text="Welcome to MealMatch" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+            <TextField fx:id="emailField" promptText="Email" styleClass="input-field"/>
+            <PasswordField fx:id="passField" promptText="Password" styleClass="input-field"/>
+
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="Login" onAction="#handleLogin" styleClass="btn-primary"/>
+                <Button text="Create Account" onAction="#showRegisterView" styleClass="btn-secondary"/>
+            </HBox>
+        </VBox>
+
+        <VBox fx:id="registerSection" spacing="15" alignment="CENTER" maxWidth="400" visible="false" managed="false">
+            <Label text="Create an Account" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+            <TextField fx:id="regUsernameField" promptText="Username" styleClass="input-field"/>
+            <TextField fx:id="regEmailField" promptText="Email" styleClass="input-field"/>
+            <PasswordField fx:id="regPassField" promptText="Password" styleClass="input-field"/>
+
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="Register" onAction="#processRegistration" styleClass="btn-primary"/>
+                <Button text="Back to Login" onAction="#showLoginView" styleClass="btn-secondary"/>
+            </HBox>
+        </VBox>
+
+        <VBox fx:id="profileSection" spacing="20" visible="false" managed="false">
+            <HBox spacing="20" alignment="CENTER_LEFT">
+                <VBox spacing="5">
+                    <Label fx:id="nameLabel" text="Name: Jane Doe" style="-fx-font-size: 18px;"/>
+                    <Label fx:id="emailLabel" text="Email: jane@example.com"/>
+                </VBox>
+                <Button text="Log Out" onAction="#handleLogout" styleClass="btn-danger"/>
+            </HBox>
+
+            <Separator/>
+
+            <VBox spacing="10">
+                <Label text="Change Password" style="-fx-font-weight: bold;"/>
+                <HBox spacing="10">
+                    <PasswordField fx:id="newPassField" promptText="New Password"/>
+                    <Button text="Update" onAction="#handleUpdatePass"/>
+                </HBox>
+            </VBox>
+
+            <Label text="My Favorite Recipes" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+                <FlowPane fx:id="favoritesFlowPane" hgap="10" vgap="10">
+                </FlowPane>
+            </ScrollPane>
+        </VBox>
+
+    </VBox>
+
+    <Button text="← BACK" onAction="#handleBack" styleClass="back-button"
+            AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="30.0"/>
+
+    <VBox fx:id="loadingOverlay" alignment="CENTER" visible="false" managed="false" spacing="15"
+          AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          style="-fx-background-color: rgba(253, 250, 245, 0.8);">
+
+        <ProgressIndicator prefWidth="60" prefHeight="60"/>
+
+        <Label text="Loading..."
+               style="-fx-text-fill: #c04848; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+    </VBox>
+</AnchorPane>
