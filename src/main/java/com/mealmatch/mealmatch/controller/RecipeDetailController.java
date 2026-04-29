@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.SVGPath;
 
 import java.util.Objects;
 
@@ -92,6 +93,42 @@ public class RecipeDetailController {
                 stepsContainer.getChildren().add(stepBox);
                 i++;
             }
+        }
+
+        if (favoriteButton != null) {
+            com.mealmatch.mealmatch.model.User currentUser = UserController.getLoggedUser();
+            SVGPath icon = (SVGPath) favoriteButton.lookup(".favorite-icon");
+
+            if (currentUser != null && currentUser.getFavoriteRecipes().contains(recipe)) {
+                if (!favoriteButton.getStyleClass().contains("favorite-active")) {
+                    favoriteButton.getStyleClass().add("favorite-active");
+                }
+                if (icon != null) icon.setStyle("-fx-fill: #c04848; -fx-stroke: #c04848;");
+            } else {
+                favoriteButton.getStyleClass().remove("favorite-active");
+                if (icon != null) icon.setStyle("-fx-fill: #E5A9A9; -fx-stroke: #E5A9A9;");
+            }
+
+            favoriteButton.setOnMouseClicked(event -> {
+                com.mealmatch.mealmatch.model.User user = UserController.getLoggedUser();
+                if (user != null) {
+                    SVGPath currentIcon = (SVGPath) favoriteButton.lookup(".favorite-icon");
+
+                    if (user.getFavoriteRecipes().contains(recipe)) {
+                        user.getFavoriteRecipes().remove(recipe);
+                        favoriteButton.getStyleClass().remove("favorite-active");
+                        if (currentIcon != null) currentIcon.setStyle("-fx-fill: #E5A9A9; -fx-stroke: #E5A9A9;");
+                        System.out.println("Removed from favorites: " + recipe.title());
+                    } else {
+                        user.addFavorite(recipe);
+                        favoriteButton.getStyleClass().add("favorite-active");
+                        if (currentIcon != null) currentIcon.setStyle("-fx-fill: #c04848; -fx-stroke: #c04848;");
+                        System.out.println("Recipe added to favorites: " + recipe.title());
+                    }
+                } else {
+                    System.out.println("User must be logged in to save favorites.");
+                }
+            });
         }
 
         if (recipe.imagePath() != null) {

@@ -1,6 +1,10 @@
 package com.mealmatch.mealmatch.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
+    private final List<Recipe> favoriteRecipes = new ArrayList<>();
     private String username;
     private String email;
     private String password;
@@ -33,5 +37,15 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Recipe> getFavoriteRecipes() {
+        return favoriteRecipes;
+    }
+
+    public void addFavorite(Recipe recipe) {
+        if (!favoriteRecipes.contains(recipe)) {
+            favoriteRecipes.add(recipe);
+        }
     }
 }

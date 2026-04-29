@@ -146,17 +146,6 @@
 }
 
 
-.favorite-icon {
-    -fx-fill: #E5A9A9;
-    -fx-stroke: #E5A9A9;
-    -fx-stroke-width: 0.5;
-}
-
-.favorite-container:hover .favorite-icon {
-    -fx-fill: #D37575;
-}
-
-
 /* Detail page styles */
 .main-container {
     -fx-background-color: #fcfaf5;
@@ -325,4 +314,9 @@
     -fx-border-color: transparent;
 }
 
+.favorite-icon {
+    -fx-fill: #E5A9A9;
+    -fx-stroke: #E5A9A9;
+    -fx-stroke-width: 0.5;
+}
 

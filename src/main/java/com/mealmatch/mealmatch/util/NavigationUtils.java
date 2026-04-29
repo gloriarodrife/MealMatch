@@ -1,7 +1,9 @@
 package com.mealmatch.mealmatch.util;
 
 import com.mealmatch.mealmatch.controller.RecipeDetailController;
+import com.mealmatch.mealmatch.controller.UserController;
 import com.mealmatch.mealmatch.model.Recipe;
+import com.mealmatch.mealmatch.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -11,8 +13,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -104,6 +108,50 @@ public class NavigationUtils {
             }
 
             card.setOnMouseClicked(event -> showRecipeDetail(recipe, event));
+            StackPane favoriteBtn = (StackPane) card.lookup("#favoriteButton");
+
+            if (favoriteBtn != null) {
+                favoriteBtn.setPickOnBounds(true);
+
+                SVGPath icon = (SVGPath) favoriteBtn.lookup(".favorite-icon");
+
+                User currentUserOnLoad = UserController.getLoggedUser();
+                if (currentUserOnLoad != null && currentUserOnLoad.getFavoriteRecipes().contains(recipe)) {
+                    if (!favoriteBtn.getStyleClass().contains("favorite-active")) {
+                        favoriteBtn.getStyleClass().add("favorite-active");
+                    }
+
+                    if (icon != null) icon.setStyle("-fx-fill: #c04848; -fx-stroke: #c04848;");
+
+                } else {
+                    favoriteBtn.getStyleClass().remove("favorite-active");
+                    if (icon != null) icon.setStyle("-fx-fill: #E5A9A9; -fx-stroke: #E5A9A9;");
+                }
+
+                favoriteBtn.setOnMouseClicked(event -> {
+                    event.consume();
+
+                    User currentUser = UserController.getLoggedUser();
+                    if (currentUser != null) {
+                        if (currentUser.getFavoriteRecipes().contains(recipe)) {
+                            currentUser.getFavoriteRecipes().remove(recipe);
+                            favoriteBtn.getStyleClass().remove("favorite-active");
+                            System.out.println("Removed from favorites: " + recipe.title());
+
+                            if (icon != null) icon.setStyle("-fx-fill: #E5A9A9; -fx-stroke: #E5A9A9;");
+                        } else {
+                            currentUser.addFavorite(recipe);
+                            favoriteBtn.getStyleClass().add("favorite-active");
+                            System.out.println("Added to favorites: " + recipe.title());
+                            if (icon != null) icon.setStyle("-fx-fill: #c04848; -fx-stroke: #c04848;");
+                        }
+                    } else {
+                        System.out.println("User must be logged in!");
+                    }
+                });
+            }
+
+            card.setOnMouseClicked(event -> showRecipeDetail(recipe, event));
 
             return card;
 
@@ -112,4 +160,5 @@ public class NavigationUtils {
             return null;
         }
     }
+
 }

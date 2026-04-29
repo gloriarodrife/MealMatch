@@ -87,7 +87,10 @@
                 </ScrollPane>
             </VBox>
         </VBox>
+
+        <Region fx:id="spacer" VBox.vgrow="ALWAYS" visible="false" managed="false"/>
     </VBox>
+
 
     <Button text="← BACK" onAction="#handleBack" styleClass="back-button"
             AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="30.0"/>

@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ public class UserController {
     public VBox loadingOverlay;
     @FXML
     public PasswordField newPassField;
+    @FXML
+    public Region spacer;
     @FXML
     private VBox authSection;
     @FXML
@@ -50,6 +53,10 @@ public class UserController {
     private Label emailLabel;
     @FXML
     private FlowPane favoritesFlowPane;
+
+    public static User getLoggedUser() {
+        return loggedUser;
+    }
 
     @FXML
     public void initialize() {
@@ -103,6 +110,8 @@ public class UserController {
 
         registerSection.setVisible(true);
         registerSection.setManaged(true);
+
+        spacer.setManaged(false);
     }
 
     @FXML
@@ -114,6 +123,8 @@ public class UserController {
 
         authSection.setVisible(true);
         authSection.setManaged(true);
+
+        spacer.setManaged(false);
     }
 
     @FXML
@@ -126,6 +137,8 @@ public class UserController {
         profileSection.setVisible(true);
         profileSection.setManaged(true);
 
+        spacer.setManaged(true);
+
         nameLabel.setText(loggedUser.getUsername());
         emailLabel.setText(loggedUser.getEmail());
 
@@ -135,13 +148,16 @@ public class UserController {
     @FXML
     private void loadFavorites() {
         favoritesFlowPane.getChildren().clear();
-        List<Recipe> favorites = getMockFavorites();
+        User currentUser = getLoggedUser();
 
-        for (Recipe recipe : favorites) {
-            VBox card = NavigationUtils.createRecipeCard(recipe);
+        if (currentUser != null) {
+            List<Recipe> favorites = currentUser.getFavoriteRecipes();
 
-            if (card != null) {
-                favoritesFlowPane.getChildren().add(card);
+            for (Recipe recipe : favorites) {
+                VBox card = NavigationUtils.createRecipeCard(recipe);
+                if (card != null) {
+                    favoritesFlowPane.getChildren().add(card);
+                }
             }
         }
     }
