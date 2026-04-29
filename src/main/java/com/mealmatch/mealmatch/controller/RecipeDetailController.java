@@ -1,20 +1,17 @@
 package com.mealmatch.mealmatch.controller;
 
 import com.mealmatch.mealmatch.model.Recipe;
+import com.mealmatch.mealmatch.util.NavigationUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import javafx.scene.shape.SVGPath;
 
-import java.io.IOException;
 import java.util.Objects;
 
 public class RecipeDetailController {
@@ -98,6 +95,42 @@ public class RecipeDetailController {
             }
         }
 
+        if (favoriteButton != null) {
+            com.mealmatch.mealmatch.model.User currentUser = UserController.getLoggedUser();
+            SVGPath icon = (SVGPath) favoriteButton.lookup(".favorite-icon");
+
+            if (currentUser != null && currentUser.getFavoriteRecipes().contains(recipe)) {
+                if (!favoriteButton.getStyleClass().contains("favorite-active")) {
+                    favoriteButton.getStyleClass().add("favorite-active");
+                }
+                if (icon != null) icon.setStyle("-fx-fill: #c04848; -fx-stroke: #c04848;");
+            } else {
+                favoriteButton.getStyleClass().remove("favorite-active");
+                if (icon != null) icon.setStyle("-fx-fill: #E5A9A9; -fx-stroke: #E5A9A9;");
+            }
+
+            favoriteButton.setOnMouseClicked(event -> {
+                com.mealmatch.mealmatch.model.User user = UserController.getLoggedUser();
+                if (user != null) {
+                    SVGPath currentIcon = (SVGPath) favoriteButton.lookup(".favorite-icon");
+
+                    if (user.getFavoriteRecipes().contains(recipe)) {
+                        user.getFavoriteRecipes().remove(recipe);
+                        favoriteButton.getStyleClass().remove("favorite-active");
+                        if (currentIcon != null) currentIcon.setStyle("-fx-fill: #E5A9A9; -fx-stroke: #E5A9A9;");
+                        System.out.println("Removed from favorites: " + recipe.title());
+                    } else {
+                        user.addFavorite(recipe);
+                        favoriteButton.getStyleClass().add("favorite-active");
+                        if (currentIcon != null) currentIcon.setStyle("-fx-fill: #c04848; -fx-stroke: #c04848;");
+                        System.out.println("Recipe added to favorites: " + recipe.title());
+                    }
+                } else {
+                    System.out.println("User must be logged in to save favorites.");
+                }
+            });
+        }
+
         if (recipe.imagePath() != null) {
             try {
 
@@ -112,15 +145,6 @@ public class RecipeDetailController {
 
     @FXML
     private void handleBack(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mealmatch/mealmatch/view/hello-view.fxml"));
-            Parent root = loader.load();
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.getScene().setRoot(root);
-
-        } catch (IOException e) {
-            System.err.println("Error trying to go back: " + e.getMessage());
-        }
+        NavigationUtils.navigateToHome(event);
     }
 }

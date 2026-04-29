@@ -1,6 +1,7 @@
 package com.mealmatch.mealmatch.controller;
 
 import com.mealmatch.mealmatch.model.Recipe;
+import com.mealmatch.mealmatch.util.NavigationUtils;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,17 +9,12 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
 public class HelloController {
@@ -100,9 +96,26 @@ public class HelloController {
         renderRecipes(filtered);
     }
 
+
+    @FXML
+    public void onUserButtonClick(javafx.event.ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mealmatch/mealmatch/view/user-view.fxml"));
+            javafx.scene.Parent userRoot = loader.load();
+
+            // Get the current stage (window) from the button click event
+            javafx.stage.Stage stage = (javafx.stage.Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+            // Replace the current content with the new user page
+            stage.getScene().setRoot(userRoot);
+
+        } catch (Exception e) {
+            System.err.println("Error loading user view: " + e.getMessage());
+        }
+    }
+
     private void renderRecipes(List<Recipe> recipes) {
         recipeGrid.getChildren().clear();
-
 
         if (recipes.isEmpty()) {
             Label noResultsLabel = new Label("No recipes match the filters.");
@@ -111,88 +124,15 @@ public class HelloController {
             return;
         }
 
-
         for (Recipe recipe : recipes) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mealmatch/mealmatch/view/recipe-card.fxml"));
-                VBox card = loader.load();
+            VBox card = NavigationUtils.createRecipeCard(recipe);
 
-                Label title = (Label) card.lookup("#titleLabel");
-                Label time = (Label) card.lookup("#timeLabel");
-                Label difficulty = (Label) card.lookup("#difficultyLabel");
-                Label category = (Label) card.lookup("#categoryLabel");
-                HBox dietaryContainer = (HBox) card.lookup("#dietaryContainer");
-
-                if (title != null) title.setText(recipe.title());
-                if (category != null) category.setText(recipe.category());
-                if (time != null) time.setText(recipe.time());
-                if (difficulty != null) difficulty.setText(recipe.difficulty());
-
-
-                if (dietaryContainer != null && recipe.dietaryTags() != null) {
-                    dietaryContainer.getChildren().clear();
-
-                    for (String tag : recipe.dietaryTags()) {
-                        String displayTag = tag;
-                        String styleClass = "dietary-tag";
-
-                        if (tag.equalsIgnoreCase("Gluten Free")) {
-                            displayTag = "GF";
-                            styleClass = "tag-gf";
-                        } else if (tag.equalsIgnoreCase("Vegetarian") || tag.equalsIgnoreCase("Veggie")) {
-                            displayTag = "Veggie";
-                            styleClass = "tag-veggie";
-                        } else if (tag.equalsIgnoreCase("Vegan")) {
-                            styleClass = "tag-vegan";
-                        }
-
-                        Label label = new Label(displayTag);
-                        label.getStyleClass().addAll("dietary-tag", styleClass);
-                        dietaryContainer.getChildren().add(label);
-                    }
-                }
-
-                ImageView iv = (ImageView) card.lookup("#recipeImage");
-                if (iv != null && recipe.imagePath() != null) {
-                    try {
-                        String path = "/com/mealmatch/mealmatch/view/images/" + recipe.imagePath();
-                        Image img = new Image(Objects.requireNonNull(getClass().getResourceAsStream(path)));
-                        iv.setImage(img);
-
-                        Rectangle clip = new Rectangle(iv.getFitWidth(), iv.getFitHeight());
-                        clip.setArcWidth(36);
-                        clip.setArcHeight(36);
-                        iv.setClip(clip);
-                    } catch (Exception e) {
-                        System.err.println("Could not load image: " + recipe.imagePath());
-                    }
-                }
-
-                card.setOnMouseClicked(event -> showRecipeDetail(recipe, event));
+            if (card != null) {
                 recipeGrid.getChildren().add(card);
-
-            } catch (Exception e) {
-                System.err.println("Error loading recipe card: " + e.getMessage());
             }
         }
     }
 
-    private void showRecipeDetail(Recipe recipe, javafx.scene.input.MouseEvent event) {
-
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mealmatch/mealmatch/view/recipe-detail.fxml"));
-            javafx.scene.Parent detailRoot = loader.load();
-
-            RecipeDetailController controller = loader.getController();
-            controller.initData(recipe);
-
-            javafx.stage.Stage stage = (javafx.stage.Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            stage.getScene().setRoot(detailRoot);
-        } catch (Exception e) {
-            System.err.println("Error loading recipe: " + e.getMessage());
-        }
-    }
 
     private List<Recipe> getMockRecipes() {
         List<Recipe> recipes = new ArrayList<>();
