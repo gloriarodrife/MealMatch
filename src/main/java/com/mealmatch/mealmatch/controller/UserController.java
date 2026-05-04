@@ -17,11 +17,6 @@ import java.util.List;
 
 public class UserController {
     public static User loggedUser = null;
-    // Fake data
-    private final String FAKE_EMAIL = "gloria@wcc.edu";
-    private final String FAKE_PASS = "1234";
-    private final String FAKE_NAME = "Gloria Rodriguez";
-
 
     @FXML
     public VBox loadingOverlay;
@@ -29,6 +24,8 @@ public class UserController {
     public PasswordField newPassField;
     @FXML
     public Region spacer;
+    @FXML
+    public Label updateStatusLabel;
     @FXML
     private VBox authSection;
     @FXML
@@ -91,7 +88,7 @@ public class UserController {
         User authenticatedUser = userDAO.validateCredentials(email, password);
 
         if (authenticatedUser != null) {
-            loggedUser = authenticatedUser; // Guarda la sesión global
+            loggedUser = authenticatedUser;
             NavigationUtils.navigateToHome(event);
         } else {
             showError("Invalid Credentials", "The email or password provided is incorrect.");
@@ -180,7 +177,26 @@ public class UserController {
 
     @FXML
     public void handleUpdatePass() {
-        System.out.println("Password updated");
+        String newPassword = newPassField.getText();
+
+        if (newPassword.isEmpty()) {
+            showError("Input Error", "The password cannot be empty.");
+        }
+
+        UserDAO userDAO = new UserDAO();
+        boolean success = userDAO.updatePassword(loggedUser.getId(), newPassword);
+
+        if (success) {
+            loggedUser.setPassword(newPassword);
+            newPassField.clear();
+
+            updateStatusLabel.setText("Password updated successfully.");
+            updateStatusLabel.setStyle("-fx-text-fill: #2e7d32;");
+            System.out.println("Password updated for: " + loggedUser.getUsername());
+        } else {
+            showError("Database Error", "Could not update password..");
+        }
+
     }
 
     @FXML

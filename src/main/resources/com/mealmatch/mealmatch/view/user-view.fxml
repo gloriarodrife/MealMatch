@@ -70,7 +70,9 @@
                                     prefHeight="35.0"
                                     styleClass="btn-danger-outline"
                                     style="-fx-cursor: hand; -fx-padding: 0 20;"/>
+
                         </HBox>
+                        <Label fx:id="updateStatusLabel"/>
                     </VBox>
                 </VBox>
             </HBox>
