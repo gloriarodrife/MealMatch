@@ -9,6 +9,12 @@ TRUNCATE TABLE user_favorites;
 TRUNCATE TABLE recipes;
 SET FOREIGN_KEY_CHECKS = 1;
 
+# Adding some users:
+INSERT INTO users (username, email, password)
+VALUES ('Gloria Rodriguez', 'gloria@wcc.edu', '1234'),
+       ('Laura Sosa', 'laura@mealmatch.com', 'admin123'),
+       ('Miller Steven', 'miller@wcc.edu', 'havefun'),
+       ('Lauren', 'lauren@example.com', 'chicken');
 
 INSERT INTO recipes (title, prep_time, category, difficulty, image_path)
 VALUES ('Authentic Basque Cheesecake', '12 hours', 'Desserts', 'Advanced', 'cheesecake.png');

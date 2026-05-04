@@ -1,5 +1,6 @@
 package com.mealmatch.mealmatch.controller;
 
+import com.mealmatch.mealmatch.database.UserDAO;
 import com.mealmatch.mealmatch.model.Recipe;
 import com.mealmatch.mealmatch.model.User;
 import com.mealmatch.mealmatch.util.NavigationUtils;
@@ -86,8 +87,11 @@ public class UserController {
             return;
         }
 
-        if (email.equals(FAKE_EMAIL) && password.equals(FAKE_PASS)) {
-            loggedUser = new User(FAKE_NAME, FAKE_EMAIL, FAKE_PASS);
+        UserDAO userDAO = new UserDAO();
+        User authenticatedUser = userDAO.validateCredentials(email, password);
+
+        if (authenticatedUser != null) {
+            loggedUser = authenticatedUser; // Guarda la sesión global
             NavigationUtils.navigateToHome(event);
         } else {
             showError("Invalid Credentials", "The email or password provided is incorrect.");
