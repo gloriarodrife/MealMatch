@@ -67,4 +67,29 @@ public class UserDAO {
             return false;
         }
     }
+    //favorites part
+    public void addFavorite(int userId, String recipeId) {
+        String query = "INSERT INTO user_favorites (user_id, recipe_id) VALUES (?, ?)";
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, userId);
+            pstmt.setInt(2, Integer.parseInt(recipeId)); // Fix is here
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeFavorite(int userId, String recipeId) {
+        String query = "DELETE FROM user_favorites WHERE user_id = ? AND recipe_id = ?";
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, userId);
+            pstmt.setInt(2, Integer.parseInt(recipeId));            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

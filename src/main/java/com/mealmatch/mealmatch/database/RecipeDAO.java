@@ -15,19 +15,20 @@ public class RecipeDAO {
         try (Connection conn = DatabaseManager.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
-
             while (rs.next()) {
-                int id = rs.getInt("id");
+                int idInt = rs.getInt("id");
+                String idStr = String.valueOf(idInt);
 
                 Recipe recipe = new Recipe(
+                        idStr, // Pass String here
                         rs.getString("title"),
                         rs.getString("prep_time"),
                         rs.getString("category"),
                         rs.getString("difficulty"),
                         rs.getString("image_path"),
-                        getDetails(id, "dietary_tags", "tag_name"),
-                        getDetails(id, "ingredients", "name"),
-                        getDetails(id, "steps", "description")
+                        getDetails(idInt, "dietary_tags", "tag_name"), // Pass int here
+                        getDetails(idInt, "ingredients", "name"),      // Pass int here
+                        getDetails(idInt, "steps", "description")      // Pass int here
                 );
                 recipes.add(recipe);
             }

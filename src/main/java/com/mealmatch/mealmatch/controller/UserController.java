@@ -227,20 +227,19 @@ public class UserController {
     }
 
 
-    // Fake Favorites data
-    private List<Recipe> getMockFavorites() {
-        List<Recipe> favs = new ArrayList<>();
-
-        favs.add(new Recipe(
-                "Authentic Basque Cheesecake", "12 hours", "Desserts", "Advanced", "pancakes.jpg",
-                List.of("Vegetarian", "Gluten Free"), List.of("Cheese", "Sugar"), List.of("Mix", "Bake")
-        ));
-
-        favs.add(new Recipe(
-                "Fluffy Berry Pancakes", "15 min", "Breakfast", "Easy", "pancakes.jpg",
-                List.of("Vegetarian"), List.of("Flour", "Milk"), List.of("Cook", "Serve")
-        ));
-
-        return favs;
+//    // Fake Favorites data
+//    private List<Recipe> getMockFavorites() {
+//        List<Recipe> favs = new ArrayList<>();
+//
+//        favs.add(new Recipe(
+//                "Authentic Basque Cheesecake", "12 hours", "Desserts", "Advanced", "pancakes.jpg",
+//                List.of("Vegetarian", "Gluten Free"), List.of("Cheese", "Sugar"), List.of("Mix", "Bake")
+//        ));
+//
+//        favs.add(new Recipe(
+//                "Fluffy Berry Pancakes", "15 min", "Breakfast", "Easy", "pancakes.jpg",
+//                List.of("Vegetarian"), List.of("Flour", "Milk"), List.of("Cook", "Serve")
+//        ));
+//
+//        return favs;
     }
-}
