@@ -64,6 +64,7 @@ public class HelloController {
     private void handleCategoryAction(javafx.event.ActionEvent event) {
         Hyperlink link = (Hyperlink) event.getSource();
         selectedCategory = link.getText();
+        link.setVisited(false);
         applyFilters();
     }
 
