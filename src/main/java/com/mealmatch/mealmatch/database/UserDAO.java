@@ -50,4 +50,21 @@ public class UserDAO {
             return false;
         }
     }
+
+    public boolean createUser(User user) {
+        String query = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getEmail());
+            stmt.setString(3, user.getPassword());
+
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Error registering user: " + e.getMessage());
+            return false;
+        }
+    }
 }
