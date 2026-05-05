@@ -12,7 +12,7 @@
             <padding>
                 <Insets bottom="20" left="40" right="180" top="20"/>
             </padding>
-            <Label style="-fx-font-size: 22; -fx-font-weight: bold;" text="Meal Match"/>
+            <Label style="-fx-font-size: 28; -fx-font-weight: 900; -fx-text-fill: #2c3e50;" text="Meal Match"/>
 
             <Region HBox.hgrow="ALWAYS"/>
             <TextField fx:id="searchRecipe" prefWidth="300" prefHeight="32" promptText="Search recipes..."
@@ -35,18 +35,22 @@
             <padding>
                 <Insets bottom="20" left="20" right="20" top="20"/>
             </padding>
-            <Label style="-fx-font-weight: bold;" text="CATEGORIES"/>
-            <Hyperlink onAction="#handleCategoryAction" text="All Recipes"/>
-            <Hyperlink onAction="#handleCategoryAction" text="Breakfast"/>
-            <Hyperlink onAction="#handleCategoryAction" text="Main Courses"/>
-            <Hyperlink onAction="#handleCategoryAction" text="Soups"/>
+            <Label style="-fx-font-weight: bold; -fx-text-fill: #c04848;" text="CATEGORIES"/>
+            <Hyperlink onAction="#handleCategoryAction" text="All Recipes"
+                       style="-fx-text-fill: #4a4a4a; -fx-underline: false; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;"/>
+            <Hyperlink onAction="#handleCategoryAction" text="Breakfast"
+                       style="-fx-text-fill: #4a4a4a; -fx-underline: false; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;"/>
+            <Hyperlink onAction="#handleCategoryAction" text="Main Courses"
+                       style="-fx-text-fill: #4a4a4a; -fx-underline: false; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;"/>
+            <Hyperlink onAction="#handleCategoryAction" text="Soups"
+                       style="-fx-text-fill: #4a4a4a; -fx-underline: false; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;"/>
             <Separator/>
-            <Label style="-fx-font-weight: bold;" text="DIETARY"/>
+            <Label style="-fx-font-weight: bold; -fx-text-fill: #c04848;" text="DIETARY"/>
             <CheckBox fx:id="checkVegetarian" text="Vegetarian" onAction="#applyFilters"/>
             <CheckBox fx:id="checkVegan" text="Vegan" onAction="#applyFilters"/>
             <CheckBox fx:id="checkGlutenFree" text="Gluten Free" onAction="#applyFilters"/>
-
-            <Label style="-fx-font-weight: bold;" text="DIFFICULTY"/>
+            <Separator/>
+            <Label style="-fx-font-weight: bold; -fx-text-fill: #c04848;" text="DIFFICULTY"/>
             <CheckBox fx:id="checkEasy" text="Easy" onAction="#applyFilters"/>
             <CheckBox fx:id="checkIntermediate" text="Intermediate" onAction="#applyFilters"/>
         </VBox>

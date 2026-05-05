@@ -20,6 +20,8 @@ import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class NavigationUtils {
@@ -71,7 +73,11 @@ public class NavigationUtils {
             HBox dietaryContainer = (HBox) card.lookup("#dietaryContainer");
             if (dietaryContainer != null && recipe.dietaryTags() != null) {
                 dietaryContainer.getChildren().clear();
-                for (String tag : recipe.dietaryTags()) {
+
+                List<String> sortedTags = new ArrayList<>(recipe.dietaryTags());
+                java.util.Collections.sort(sortedTags);
+
+                for (String tag : sortedTags) {
                     String displayTag = tag;
                     String styleClass = "dietary-tag";
 

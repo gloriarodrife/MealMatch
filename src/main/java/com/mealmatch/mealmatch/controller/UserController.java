@@ -97,8 +97,26 @@ public class UserController {
 
     @FXML
     public void processRegistration() {
-        if (!regEmailField.getText().isEmpty()) {
-            showProfileView();
+        String username = regUsernameField.getText();
+        String email = regEmailField.getText();
+        String password = regPassField.getText();
+
+        if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            showError("Incomplete data", "Please fill in all fields.");
+            return;
+        }
+
+        UserDAO userDAO = new UserDAO();
+        User newUser = new User(0, username, email, password);
+
+        if (userDAO.createUser(newUser)) {
+            User authenticated = userDAO.validateCredentials(email, password);
+            if (authenticated != null) {
+                loggedUser = authenticated;
+                showProfileView();
+            }
+        } else {
+            showError("Registration Error", "It is possible that the email is already in use.");
         }
     }
 
@@ -117,6 +135,10 @@ public class UserController {
 
     @FXML
     public void showLoginView() {
+        regUsernameField.clear();
+        regEmailField.clear();
+        regPassField.clear();
+        
         registerSection.setVisible(false);
         registerSection.setManaged(false);
         profileSection.setVisible(false);
