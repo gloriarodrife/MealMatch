@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO {
 
@@ -67,14 +69,14 @@ public class UserDAO {
             return false;
         }
     }
+
     //favorites part
-    public void addFavorite(int userId, String recipeId) {
+    public void addFavorite(int userId, int recipeId) {
         String query = "INSERT INTO user_favorites (user_id, recipe_id) VALUES (?, ?)";
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
-
             pstmt.setInt(1, userId);
-            pstmt.setInt(2, Integer.parseInt(recipeId)); // Fix is here
+            pstmt.setInt(2, recipeId);
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -82,14 +84,34 @@ public class UserDAO {
         }
     }
 
-    public void removeFavorite(int userId, String recipeId) {
+    public void removeFavorite(int userId, int recipeId) {
         String query = "DELETE FROM user_favorites WHERE user_id = ? AND recipe_id = ?";
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setInt(1, userId);
-            pstmt.setInt(2, Integer.parseInt(recipeId));            pstmt.executeUpdate();
+            pstmt.setInt(2, recipeId);
+            pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Integer> getFavoriteRecipeIds(int userId) {
+        List<Integer> favoriteIds = new ArrayList<>();
+        String query = "SELECT recipe_id FROM user_favorites WHERE user_id = ?";
+
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                favoriteIds.add(rs.getInt("recipe_id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return favoriteIds;
     }
 }

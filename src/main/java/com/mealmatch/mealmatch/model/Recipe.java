@@ -4,9 +4,9 @@ package com.mealmatch.mealmatch.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public record Recipe(String id, String title, String time, String category, String difficulty, String imagePath,
+public record Recipe(int id, String title, String time, String category, String difficulty, String imagePath,
                      List<String> dietaryTags, List<String> ingredients, List<String> steps) {
-    public Recipe(String id,String title, String time, String category, String difficulty, String imagePath, List<String> dietaryTags,
+    public Recipe(int id, String title, String time, String category, String difficulty, String imagePath, List<String> dietaryTags,
                   List<String> ingredients, List<String> steps) {
         this.id = id;
         this.title = title;

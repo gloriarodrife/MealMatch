@@ -12,7 +12,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserController {
@@ -138,7 +137,7 @@ public class UserController {
         regUsernameField.clear();
         regEmailField.clear();
         regPassField.clear();
-        
+
         registerSection.setVisible(false);
         registerSection.setManaged(false);
         profileSection.setVisible(false);
@@ -174,12 +173,21 @@ public class UserController {
         User currentUser = getLoggedUser();
 
         if (currentUser != null) {
-            List<Recipe> favorites = currentUser.getFavoriteRecipes();
+            UserDAO userDAO = new UserDAO();
+            List<Integer> savedFavoriteIds = userDAO.getFavoriteRecipeIds(currentUser.getId());
 
-            for (Recipe recipe : favorites) {
-                VBox card = NavigationUtils.createRecipeCard(recipe);
-                if (card != null) {
-                    favoritesFlowPane.getChildren().add(card);
+            com.mealmatch.mealmatch.database.RecipeDAO recipeDAO = new com.mealmatch.mealmatch.database.RecipeDAO();
+            List<Recipe> allRecipes = recipeDAO.getAllRecipes();
+
+            currentUser.getFavoriteRecipes().clear();
+
+            for (Recipe recipe : allRecipes) {
+                if (savedFavoriteIds.contains(recipe.id())) {
+                    currentUser.addFavorite(recipe);
+                    VBox card = NavigationUtils.createRecipeCard(recipe);
+                    if (card != null) {
+                        favoritesFlowPane.getChildren().add(card);
+                    }
                 }
             }
         }
@@ -226,20 +234,4 @@ public class UserController {
         NavigationUtils.navigateToHome(event);
     }
 
-
-//    // Fake Favorites data
-//    private List<Recipe> getMockFavorites() {
-//        List<Recipe> favs = new ArrayList<>();
-//
-//        favs.add(new Recipe(
-//                "Authentic Basque Cheesecake", "12 hours", "Desserts", "Advanced", "pancakes.jpg",
-//                List.of("Vegetarian", "Gluten Free"), List.of("Cheese", "Sugar"), List.of("Mix", "Bake")
-//        ));
-//
-//        favs.add(new Recipe(
-//                "Fluffy Berry Pancakes", "15 min", "Breakfast", "Easy", "pancakes.jpg",
-//                List.of("Vegetarian"), List.of("Flour", "Milk"), List.of("Cook", "Serve")
-//        ));
-//
-//        return favs;
-    }
+}

@@ -138,15 +138,22 @@ public class NavigationUtils {
                     event.consume();
 
                     User currentUser = UserController.getLoggedUser();
+
                     if (currentUser != null) {
+                        com.mealmatch.mealmatch.database.UserDAO userDAO = new com.mealmatch.mealmatch.database.UserDAO();
                         if (currentUser.getFavoriteRecipes().contains(recipe)) {
+
                             currentUser.getFavoriteRecipes().remove(recipe);
+                            userDAO.removeFavorite(currentUser.getId(), recipe.id());
+
                             favoriteBtn.getStyleClass().remove("favorite-active");
                             System.out.println("Removed from favorites: " + recipe.title());
 
                             if (icon != null) icon.setStyle("-fx-fill: #E5A9A9; -fx-stroke: #E5A9A9;");
                         } else {
                             currentUser.addFavorite(recipe);
+                            userDAO.addFavorite(currentUser.getId(), recipe.id());
+
                             favoriteBtn.getStyleClass().add("favorite-active");
                             System.out.println("Added to favorites: " + recipe.title());
                             if (icon != null) icon.setStyle("-fx-fill: #c04848; -fx-stroke: #c04848;");

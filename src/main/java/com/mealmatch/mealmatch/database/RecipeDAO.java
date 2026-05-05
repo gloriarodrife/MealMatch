@@ -16,19 +16,18 @@ public class RecipeDAO {
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
-                int idInt = rs.getInt("id");
-                String idStr = String.valueOf(idInt);
+                int id = rs.getInt("id");
 
                 Recipe recipe = new Recipe(
-                        idStr, // Pass String here
+                        id, // Pass String here
                         rs.getString("title"),
                         rs.getString("prep_time"),
                         rs.getString("category"),
                         rs.getString("difficulty"),
                         rs.getString("image_path"),
-                        getDetails(idInt, "dietary_tags", "tag_name"), // Pass int here
-                        getDetails(idInt, "ingredients", "name"),      // Pass int here
-                        getDetails(idInt, "steps", "description")      // Pass int here
+                        getDetails(id, "dietary_tags", "tag_name"), // Pass int here
+                        getDetails(id, "ingredients", "name"),      // Pass int here
+                        getDetails(id, "steps", "description")      // Pass int here
                 );
                 recipes.add(recipe);
             }
