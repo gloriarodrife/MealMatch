@@ -160,6 +160,28 @@ public class NavigationUtils {
                         }
                     } else {
                         System.out.println("User must be logged in!");
+
+                        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.WARNING);
+                        alert.setTitle("Authentication Required");
+                        alert.setHeaderText("Please Log In or Sign Up");
+                        alert.setContentText("You must be logged in to save recipes to your favorites.");
+
+                        javafx.scene.control.ButtonType cancelButton = new javafx.scene.control.ButtonType("Cancel");
+                        alert.getButtonTypes().setAll(cancelButton);
+
+                        javafx.scene.control.Button btn = (javafx.scene.control.Button) alert.getDialogPane().lookupButton(cancelButton);
+                        if (btn != null) {
+                            btn.setStyle(
+                                    "-fx-background-color: #c04848; " +
+                                            "-fx-text-fill: white; " +
+                                            "-fx-padding: 8 16; " +
+                                            "-fx-background-radius: 5; " +
+                                            "-fx-font-weight: bold; " +
+                                            "-fx-cursor: hand;"
+                            );
+                        }
+                        alert.showAndWait();
+
                     }
                 });
             }

@@ -102,6 +102,21 @@ public class UserController {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(errorMessage);
+
+        javafx.scene.control.ButtonType okButton = javafx.scene.control.ButtonType.OK;
+        javafx.scene.control.Button btn = (javafx.scene.control.Button) alert.getDialogPane().lookupButton(okButton);
+
+        if (btn != null) {
+            btn.setStyle(
+                    "-fx-background-color: #c04848; " +
+                            "-fx-text-fill: white; " +
+                            "-fx-padding: 8 16; " +
+                            "-fx-background-radius: 5; " +
+                            "-fx-font-weight: bold; " +
+                            "-fx-cursor: hand;"
+            );
+        }
+
         alert.showAndWait();
     }
 
