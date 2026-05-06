@@ -1,5 +1,6 @@
 package com.mealmatch.mealmatch.controller;
 
+import com.mealmatch.mealmatch.database.UserDAO;
 import com.mealmatch.mealmatch.model.Recipe;
 import com.mealmatch.mealmatch.util.NavigationUtils;
 import javafx.event.ActionEvent;
@@ -112,21 +113,22 @@ public class RecipeDetailController {
             favoriteButton.setOnMouseClicked(event -> {
                 com.mealmatch.mealmatch.model.User user = UserController.getLoggedUser();
                 if (user != null) {
+                    UserDAO userDAO = new UserDAO(); // Create DAO instance
                     SVGPath currentIcon = (SVGPath) favoriteButton.lookup(".favorite-icon");
 
                     if (user.getFavoriteRecipes().contains(recipe)) {
                         user.getFavoriteRecipes().remove(recipe);
+                        userDAO.removeFavorite(user.getId(), recipe.id()); // Database Call
+
                         favoriteButton.getStyleClass().remove("favorite-active");
                         if (currentIcon != null) currentIcon.setStyle("-fx-fill: #E5A9A9; -fx-stroke: #E5A9A9;");
-                        System.out.println("Removed from favorites: " + recipe.title());
                     } else {
                         user.addFavorite(recipe);
+                        userDAO.addFavorite(user.getId(), recipe.id()); // Database Call
+
                         favoriteButton.getStyleClass().add("favorite-active");
                         if (currentIcon != null) currentIcon.setStyle("-fx-fill: #c04848; -fx-stroke: #c04848;");
-                        System.out.println("Recipe added to favorites: " + recipe.title());
                     }
-                } else {
-                    System.out.println("User must be logged in to save favorites.");
                 }
             });
         }
