@@ -7,7 +7,8 @@ CREATE TABLE users
     id       INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(30)  NOT NULL UNIQUE,
     email    VARCHAR(60)  NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL
+    password VARCHAR(255) NOT NULL,
+    bio      VARCHAR(255) DEFAULT ''
 );
 
 -- 2. Recipes Table

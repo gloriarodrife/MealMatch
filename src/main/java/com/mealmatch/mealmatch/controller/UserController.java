@@ -50,6 +50,11 @@ public class UserController {
     private Label emailLabel;
     @FXML
     private FlowPane favoritesFlowPane;
+    @FXML
+    private TextField bioField;
+    @FXML
+    private Label rankLabel;
+
 
     public static User getLoggedUser() {
         return loggedUser;
@@ -63,6 +68,34 @@ public class UserController {
             showLoginView();
         }
     }
+
+
+    private void loadProfileDetails() {
+
+        int favCount = loggedUser.getFavoriteRecipes().size();
+        if (favCount >= 5) {
+            rankLabel.setText("Expert Foodie");
+        } else {
+            rankLabel.setText("Novice Chef");
+        }
+
+        if (loggedUser.getBio() != null) {
+            bioField.setText(loggedUser.getBio());
+        }
+    }
+
+    @FXML
+    public void handleUpdateBio(javafx.event.ActionEvent event) {
+        String newBio = bioField.getText();
+
+        UserDAO userDAO = new UserDAO();
+        if (userDAO.updateBio(loggedUser.getId(), newBio)) {
+            loggedUser.setBio(newBio);
+            bioField.getParent().requestFocus();
+            System.out.println("Bio updated successfully.");
+        }
+    }
+
 
     private void showError(String title, String errorMessage) {
         javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
@@ -164,6 +197,7 @@ public class UserController {
         nameLabel.setText(loggedUser.getUsername());
         emailLabel.setText(loggedUser.getEmail());
 
+        loadProfileDetails();
         loadFavorites();
     }
 
@@ -211,6 +245,7 @@ public class UserController {
 
         if (newPassword.isEmpty()) {
             showError("Input Error", "The password cannot be empty.");
+            return;
         }
 
         UserDAO userDAO = new UserDAO();
@@ -222,6 +257,7 @@ public class UserController {
 
             updateStatusLabel.setText("Password updated successfully.");
             updateStatusLabel.setStyle("-fx-text-fill: #2e7d32;");
+
             System.out.println("Password updated for: " + loggedUser.getUsername());
         } else {
             showError("Database Error", "Could not update password..");

@@ -22,12 +22,16 @@ public class UserDAO {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return new User(
+                    User user = new User(
                             rs.getInt("id"),
                             rs.getString("username"),
                             rs.getString("email"),
                             rs.getString("password")
                     );
+
+                    user.setBio(rs.getString("bio"));
+
+                    return user;
                 }
             }
         } catch (SQLException e) {
@@ -113,5 +117,24 @@ public class UserDAO {
             e.printStackTrace();
         }
         return favoriteIds;
+    }
+
+    public boolean updateBio(int userId, String newBio) {
+        String query = "UPDATE users SET bio = ? WHERE id = ?";
+
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, newBio);
+
+            pstmt.setInt(2, userId);
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Error updating bio: " + e.getMessage());
+            return false;
+        }
     }
 }

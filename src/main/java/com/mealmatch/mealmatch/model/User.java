@@ -9,6 +9,7 @@ public class User {
     private String email;
     private String password;
     private int id;
+    private String bio;
 
     public User(int id, String username, String email, String password) {
         this.id = id;
@@ -57,5 +58,13 @@ public class User {
         if (!favoriteRecipes.contains(recipe)) {
             favoriteRecipes.add(recipe);
         }
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 }

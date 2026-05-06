@@ -45,20 +45,30 @@
                 <Insets top="30" right="30" bottom="30" left="30"/>
             </padding>
 
-            <HBox spacing="20">
-                <VBox spacing="5">
+            <HBox spacing="15" minHeight="180" maxHeight="300">
+                <VBox spacing="15" HBox.hgrow="ALWAYS">
                     <Label fx:id="nameLabel" styleClass="profile-name" text="User Name"/>
-                    <Label fx:id="emailLabel" styleClass="profile-email" text="user@example.com"/>
+
+                    <HBox spacing="10">
+                        <Label fx:id="emailLabel" styleClass="profile-email" text="user@example.com"/>
+                        <Label fx:id="rankLabel"
+                               style="-fx-background-color: #c04848; -fx-text-fill: white; -fx-background-radius: 5;
+                           -fx-border-width: 1;-fx-border-radius: 5; -fx-padding: 3 8;
+                           -fx-font-size: 11px; -fx-font-weight: bold; -fx-text-transform: uppercase;"
+                               text="Novice Chef"/>
+                    </HBox>
+
+                    <TextField fx:id="bioField" prefWidth="600" focusTraversable="false" onAction="#handleUpdateBio"
+                               promptText="Click to add your bio..."
+                               style="-fx-background-color: transparent;
+                               -fx-border-color: transparent; -fx-text-fill: #7f8c8d; -fx-font-style: italic; -fx-font-size: 16px; -fx-padding: 5 0 0 0;"/>
                 </VBox>
 
                 <Region HBox.hgrow="ALWAYS"/>
 
                 <VBox spacing="20" alignment="TOP_RIGHT">
-                    <Button text="Log Out" onAction="#handleLogout" prefHeight="35.0"
-                            styleClass="btn-danger-outline"
-                            style="-fx-cursor: hand; -fx-padding: 0 20;"/>
 
-                    <VBox spacing="10"
+                    <VBox spacing="10" HBox.hgrow="NEVER"
                           style="-fx-background-color: #fcfaf5; -fx-padding: 15; -fx-background-radius: 10; -fx-border-color: #eee; -fx-border-radius: 10;">
                         <Label text="ACCOUNT SECURITY"
                                style="-fx-font-weight: bold; -fx-font-size: 11px; -fx-text-fill: #999; -fx-letter-spacing: 1px;"/>
@@ -74,13 +84,18 @@
                         </HBox>
                         <Label fx:id="updateStatusLabel"/>
                     </VBox>
+                    <Button text="Log Out" onAction="#handleLogout" prefHeight="35.0"
+                            styleClass="btn-danger-outline"
+                            style="-fx-cursor: hand; -fx-padding: 0 20;"/>
                 </VBox>
             </HBox>
 
             <Separator style="-fx-opacity: 0.4;"/>
 
             <VBox spacing="20" VBox.vgrow="ALWAYS">
-                <Label text="My Favorite Recipes" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+                <Label text="My Favorite Recipes"
+                       style="-fx-font-size: 24; -fx-font-weight: 900; -fx-text-fill: #2c3e50;"/>
+
 
                 <ScrollPane fitToWidth="true"
                             style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;">
@@ -90,7 +105,8 @@
             </VBox>
         </VBox>
 
-        <Region fx:id="spacer" VBox.vgrow="ALWAYS" visible="false" managed="false"/>
+        <!--        <Region fx:id="spacer" VBox.vgrow="ALWAYS" visible="false" managed="false"/>-->
+        <Region fx:id="spacer" VBox.vgrow="ALWAYS"/>
     </VBox>
 
 

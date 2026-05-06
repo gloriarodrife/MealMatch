@@ -1,20 +1,36 @@
 USE mealmatch_db;
 
--- Clear existing data to avoid duplicates if you run it multiple times
+-- 1. Clear existing data to avoid duplicates
 SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE user_favorites;
 TRUNCATE TABLE steps;
 TRUNCATE TABLE ingredients;
 TRUNCATE TABLE dietary_tags;
-TRUNCATE TABLE user_favorites;
 TRUNCATE TABLE recipes;
+TRUNCATE TABLE users;
 SET FOREIGN_KEY_CHECKS = 1;
 
-# Adding some users:
-INSERT INTO users (username, email, password)
-VALUES ('Gloria Rodriguez', 'gloria@wcc.edu', '1234'),
-       ('Laura Sosa', 'laura@mealmatch.com', 'admin123'),
-       ('Miller Steven', 'miller@wcc.edu', 'havefun'),
-       ('Lauren', 'lauren@example.com', 'chicken');
+-- 2. Create users table with bio column directly (avoids running ALTER TABLE multiple times)
+CREATE TABLE IF NOT EXISTS users
+(
+    id       INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(30)  NOT NULL UNIQUE,
+    email    VARCHAR(60)  NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    bio      VARCHAR(255) DEFAULT ''
+);
+
+INSERT INTO users (username, email, password, bio)
+VALUES ('Gloria Rodriguez', 'gloria@wcc.edu', '1234',
+        'CS student. On a quest to bake the perfect Basque Cheesecake! 🍰'),
+       ('Laura Sosa', 'laura@mealmatch.com', 'admin123',
+        'MealMatch co-creator! Passionate about clean code and great recipes.'),
+       ('Miller Steven', 'miller@wcc.edu', 'havefun',
+        'Amateur cook. Always looking for quick and easy meals between classes.'),
+       ('Lauren', 'lauren@example.com', 'chicken', 'Just here for the good food and dessert recommendations.'),
+       ('Mario', 'mario@example.com', 'pass123', 'Trying to survive college on a ramen budget. Need cheap recipes! 🍜'),
+       ('Prof. Smith', 'smith@wcc.edu', 'qwerty', 'Looking for healthy meal prep ideas for the week.');
+
 
 INSERT INTO recipes (title, prep_time, category, difficulty, image_path)
 VALUES ('Authentic Basque Cheesecake', '12 hours', 'Desserts', 'Advanced', 'cheesecake.png');
